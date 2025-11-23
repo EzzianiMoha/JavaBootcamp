@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Bootcamp - Day 1: Java Basics & Setup</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .session-info {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .session-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre;
+        }
+        
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise {
+            background-color: #eafaf1;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise-question {
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d1ecf1;
+        }
+        
+        .exercise-answer.show {
+            display: block;
+        }
+        
+        .exercise-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .exercise-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .input-output {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .input-output h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+        
+        .step:before {
+            content: counter(step-counter);
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+        }
+        
+        .download-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .learning-objectives {
+            background: #fff9e6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .learning-objectives h3 {
+            color: var(--warning);
+            margin-top: 0;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav a {
+                padding: 0.75rem 1rem;
+            }
+            
+            .download-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Java Bootcamp - Day 1</h1>
+            <p>Java Basics & Setup - Your First Steps in Programming</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#setup">Environment Setup</a></li>
+                <li><a href="#basics">Java Basics</a></li>
+                <li><a href="#variables">Variables</a></li>
+                <li><a href="#input">User Input</a></li>
+                <li><a href="#arithmetic">Arithmetic Operators</a></li>
+                <li><a href="#random">Random Numbers</a></li>
+                <li><a href="#math">Math Operations</a></li>
+                <li><a href="#exercises">Practice Exercises</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <div class="session-info">
+            <h2>Session 1: Java Basics & Setup</h2>
+            <p><strong>Duration:</strong> ~2 Hours | <strong>Level:</strong> Beginner</p>
+            <p>Get started with Java programming by setting up your environment and writing your first programs!</p>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>📚 What You'll Learn Today</h3>
+            <ul>
+                <li>Install and set up Java development environment</li>
+                <li>Write and run your first Java program</li>
+                <li>Understand variables and data types</li>
+                <li>Get user input and display output</li>
+                <li>Use arithmetic operators for calculations</li>
+                <li>Generate random numbers for simple programs</li>
+                <li>Use Java's Math library for calculations</li>
+                <li>Complete hands-on coding exercises</li>
+            </ul>
+        </div>
+
+        <section id="setup">
+            <h2>Setting Up Your Development Environment</h2>
+            
+            <h3>Installing JDK (Java Development Kit)</h3>
+            <p>The JDK is essential for Java development as it includes the Java Runtime Environment (JRE) and development tools like the Java compiler.</p>
+            
+            <div class="step">
+                <p><strong>Step 1:</strong> Visit the <a href="https://www.oracle.com/java/technologies/javase-downloads.html" target="_blank">Oracle JDK download page</a> or <a href="https://openjdk.org/" target="_blank">OpenJDK website</a> to download the latest version of JDK.</p>
+            </div>
+            
+            <div class="step">
+                <p><strong>Step 2:</strong> Follow the installation instructions for your operating system (Windows, macOS, or Linux).</p>
+            </div>
+            
+            <div class="step">
+                <p><strong>Step 3:</strong> Verify the installation by opening a terminal/command prompt and typing:</p>
+                <div class="code-block">java -version</div>
+                <p>You should see information about the installed Java version.</p>
+            </div>
+            
+            <h3>Installing IntelliJ IDEA</h3>
+            <p>IntelliJ IDEA is a powerful Integrated Development Environment (IDE) for Java development.</p>
+            
+            <div class="step">
+                <p><strong>Step 1:</strong> Visit the <a href="https://www.jetbrains.com/idea/download/" target="_blank">IntelliJ IDEA download page</a>.</p>
+            </div>
+            
+            <div class="step">
+                <p><strong>Step 2:</strong> Download the Community Edition (free) or Ultimate Edition (paid with free trial).</p>
+            </div>
+            
+            <div class="step">
+                <p><strong>Step 3:</strong> Follow the installation instructions for your operating system.</p>
+            </div>
+            
+            <div class="step">
+                <p><strong>Step 4:</strong> Launch IntelliJ and create your first Java project:</p>
+                <ol>
+                    <li>Click "New Project"</li>
+                    <li>Select "Java"</li>
+                    <li>Choose your JDK version</li>
+                    <li>Click "Create"</li>
+                </ol>
+            </div>
+            
+            <div class="download-links">
+                <a href="https://www.oracle.com/java/technologies/javase-downloads.html" class="btn" target="_blank">Download JDK</a>
+                <a href="https://www.jetbrains.com/idea/download/" class="btn" target="_blank">Download IntelliJ</a>
+            </div>
+        </section>
+        
+        <section id="basics">
+            <h2>Java Basics</h2>
+            
+            <h3>Creating Your First Java Program</h3>
+            <p>Every Java application must have a main method, which is the entry point of the program.</p>
+            <div class="code-block">public class Main {
+    public static void main(String[] args) {
+        // Your code goes here
+        System.out.println("Hello, World!");
+    }
+}</div>
+            
+            <div class="note">
+                <p><strong>Quick Tip:</strong> In IntelliJ, you can use the shortcut "psvm" followed by Tab to quickly generate the main method, and "sout" followed by Tab for <code>System.out.println();</code></p>
+            </div>
+            
+            <h3>Printing Output</h3>
+            <p>Java provides several ways to display output:</p>
+            <div class="code-block">System.out.print("Hello"); // Prints without new line
+System.out.println("World"); // Prints with new line
+System.out.println("Hello\nWorld"); // Using escape character for new line</div>
+            
+            <h3>Comments</h3>
+            <p>Comments are used to explain code and are ignored by the compiler.</p>
+            <div class="code-block">// This is a single-line comment
+
+/*
+This is a
+multi-line comment
+*/</div>
+
+            <div class="exercise">
+                <h3>Exercise: Hello World Program</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a Java program that prints your personal information on separate lines.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Hello World!
+My name is [Your Name]
+I am [Your Age] years old
+I live in [Your City]</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+        System.out.println("My name is John");
+        System.out.println("I am 25 years old");
+        System.out.println("I live in New York");
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="variables">
+            <h2>Variables in Java</h2>
+            
+            <p>Variables are containers for storing data values. In Java, you must declare a variable before using it.</p>
+            
+            <h3>Basic Data Types</h3>
+            
+            <h4>Integer (int)</h4>
+            <p>Used for storing whole numbers without decimals.</p>
+            <div class="code-block">int age; // Declaration
+age = 25; // Assignment
+int year = 2023; // Declaration and assignment
+int quantity = 10;</div>
+            
+            <div class="warning">
+                <p>If you try to use a variable without initializing it, you'll get a compilation error:</p>
+                <div class="code-block">int age;
+System.out.println(age); // Error: variable age might not have been initialized</div>
+            </div>
+            
+            <h4>Double</h4>
+            <p>Used for storing numbers with decimal points.</p>
+            <div class="code-block">double price = 19.99;
+double temperature = 36.6;
+System.out.println("The price is $" + price); // Concatenation</div>
+            
+            <h4>Character (char)</h4>
+            <p>Used for storing single characters.</p>
+            <div class="code-block">char grade = 'A';
+char symbol = '$';
+char currency = '€';</div>
+            
+            <h4>Boolean</h4>
+            <p>Used for storing true/false values.</p>
+            <div class="code-block">boolean isStudent = true; // Note: camelCase naming convention
+boolean forSale = false;
+boolean isOnline = true;</div>
+            
+            <h3>String (Reference Type)</h3>
+            <p>Used for storing sequences of characters (text).</p>
+            <div class="code-block">String name = "John";
+String food = "Pizza";
+String email = "john@example.com";
+System.out.println("Hello " + name);
+System.out.println("Your email is " + email);</div>
+            
+            <div class="exercise">
+                <h3>Exercise: Student Information</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that stores and displays student information using different variable types.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Student Name: Maria Garcia
+Student ID: 12345
+GPA: 3.75
+Current Grade: A
+Full-time Student: true</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class StudentInfo {
+    public static void main(String[] args) {
+        String studentName = "Maria Garcia";
+        int studentId = 12345;
+        double gpa = 3.75;
+        char grade = 'A';
+        boolean isFullTime = true;
+        
+        System.out.println("Student Name: " + studentName);
+        System.out.println("Student ID: " + studentId);
+        System.out.println("GPA: " + gpa);
+        System.out.println("Current Grade: " + grade);
+        System.out.println("Full-time Student: " + isFullTime);
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Product Information</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that stores product information and displays it with proper formatting.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Product: Laptop
+Price: $999.99
+Quantity in Stock: 15
+Available: true
+Product Code: A</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class ProductInfo {
+    public static void main(String[] args) {
+        String productName = "Laptop";
+        double price = 999.99;
+        int quantity = 15;
+        boolean isAvailable = true;
+        char productCode = 'A';
+        
+        System.out.println("Product: " + productName);
+        System.out.println("Price: $" + price);
+        System.out.println("Quantity in Stock: " + quantity);
+        System.out.println("Available: " + isAvailable);
+        System.out.println("Product Code: " + productCode);
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="input">
+            <h2>Accepting User Input with Scanner</h2>
+            
+            <p>To get input from the user, we use the Scanner class from the java.util package.</p>
+            
+            <div class="code-block">import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine(); // For strings with spaces
+        
+        System.out.println("Hello " + name);
+        
+        scanner.close();
+    }
+}</div>
+            
+            <h3>Reading Different Data Types</h3>
+            <div class="code-block">System.out.print("Enter your age: ");
+int age = scanner.nextInt();
+
+System.out.print("How much is your jacket? ");
+double jacketPrice = scanner.nextDouble();
+
+System.out.print("Are you a student? (true/false): ");
+boolean isStudent = scanner.nextBoolean();
+
+System.out.println("You are " + age + " years old");
+System.out.println("Your jacket costs $" + jacketPrice);
+System.out.println("Student status: " + isStudent);</div>
+            
+            <div class="warning">
+                <h3>⚠️ Common Issue: nextLine() after nextInt()</h3>
+                <p>When using nextInt() followed by nextLine(), you might encounter an issue where nextLine() doesn't wait for input.</p>
+                <div class="code-block">System.out.print("Enter your age: ");
+int age = scanner.nextInt();
+
+System.out.print("Enter your favorite color: ");
+String color = scanner.nextLine(); // This might not work as expected
+
+System.out.println("You are " + age + " years old");
+System.out.println("You like the color " + color);</div>
+                
+                <p><strong>Explanation:</strong> The nextInt() method reads only the integer, leaving the newline character in the buffer. The nextLine() then reads that newline as an empty string.</p>
+                
+                <p><strong>Solution:</strong> Add an extra scanner.nextLine() after nextInt() to consume the newline character.</p>
+                <div class="code-block">System.out.print("Enter your age: ");
+int age = scanner.nextInt();
+scanner.nextLine(); // Consume the newline character
+
+System.out.print("Enter your favorite color: ");
+String color = scanner.nextLine(); // Now this will work correctly</div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise: Personal Information Form</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that asks for personal information and displays it back to the user in a formatted way.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter your full name: John Smith
+Enter your age: 28
+Enter your city: Boston
+Enter your salary: 55000.50</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">--- Your Information ---
+Name: John Smith
+Age: 28
+City: Boston
+Salary: $55000.5</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class PersonalInfo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter your full name: ");
+        String name = scanner.nextLine();
+        
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+        
+        System.out.print("Enter your city: ");
+        String city = scanner.nextLine();
+        
+        System.out.print("Enter your salary: ");
+        double salary = scanner.nextDouble();
+        
+        System.out.println("\n--- Your Information ---");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("City: " + city);
+        System.out.println("Salary: $" + salary);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Calculate Area of a Rectangle</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that asks the user for the width and height of a rectangle, then calculates and displays the area.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter the width: 5.5
+Enter the height: 3.2</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">The area is: 17.6</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class RectangleArea {
+    public static void main(String[] args) {
+        double height = 0;
+        double width = 0;
+        double area = 0;
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter the width: ");
+        width = scanner.nextDouble();
+        
+        System.out.print("Enter the height: ");
+        height = scanner.nextDouble();
+        
+        area = width * height;
+        System.out.println("The area is: " + area);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="arithmetic">
+            <h2>Arithmetic Operators</h2>
+            
+            <p>Arithmetic operators allow you to perform mathematical calculations in your programs.</p>
+            
+            <h3>Basic Arithmetic Operators</h3>
+            <div class="code-block">int x = 10;
+int y = 2;
+int z;
+
+z = x + y; // Addition: 12
+z = x - y; // Subtraction: 8
+z = x * y; // Multiplication: 20
+z = x / y; // Division: 5
+z = x % y; // Modulo (remainder): 0</div>
+
+            <h3>Augmented Assignment Operators</h3>
+            <p>Shortcut operators that combine an operation with assignment.</p>
+            <div class="code-block">int x = 10;
+int y = 2;
+
+x += y;  // Equivalent to: x = x + y
+x -= y;  // Equivalent to: x = x - y
+x *= y;  // Equivalent to: x = x * y
+x /= y;  // Equivalent to: x = x / y
+x %= y;  // Equivalent to: x = x % y</div>
+
+            <h3>Increment and Decrement Operators</h3>
+            <p>Special operators for increasing or decreasing a value by 1.</p>
+            <div class="code-block">int x = 1;
+x = x + 1; // x becomes 2
+x += 1;    // x becomes 3
+x++;       // x becomes 4 (post-increment)
+++x;       // x becomes 5 (pre-increment)
+x--;       // x becomes 4 (post-decrement)
+--x;       // x becomes 3 (pre-decrement)</div>
+
+            <h3>Order of Operations (PEMDAS)</h3>
+            <p>Java follows the standard mathematical order of operations: Parentheses, Exponents, Multiplication, Division, Addition, Subtraction.</p>
+            <div class="code-block">double result = 3 + 4 * (7 - 5) / 2.0;
+// Calculation: 3 + 4 * 2 / 2.0 = 3 + 8 / 2.0 = 3 + 4.0 = 7.0</div>
+
+            <div class="exercise">
+                <h3>Exercise: Shopping Cart</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that calculates the total cost of items in a shopping cart based on user input.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Item you would like to buy: Pizza
+The price of each: 12.99
+How many would you like? 3</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">You have bought 3 Pizza/s
+Your total is: $38.97</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class ShoppingCart {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Item you would like to buy: ");
+        String item = scanner.nextLine();
+        
+        System.out.print("The price of each: ");
+        double price = scanner.nextDouble();
+        
+        System.out.print("How many would you like? ");
+        int quantity = scanner.nextInt();
+        
+        double total = price * quantity;
+        
+        System.out.println("You have bought " + quantity + " " + item + "/s");
+        System.out.println("Your total is: $" + total);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Simple Calculator</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that performs basic arithmetic operations on two numbers entered by the user.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter first number: 15
+Enter second number: 4</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Results:
+15.0 + 4.0 = 19.0
+15.0 - 4.0 = 11.0
+15.0 * 4.0 = 60.0
+15.0 / 4.0 = 3.75
+15.0 % 4.0 = 3.0</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class SimpleCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter first number: ");
+        double num1 = scanner.nextDouble();
+        
+        System.out.print("Enter second number: ");
+        double num2 = scanner.nextDouble();
+        
+        System.out.println("Results:");
+        System.out.println(num1 + " + " + num2 + " = " + (num1 + num2));
+        System.out.println(num1 + " - " + num2 + " = " + (num1 - num2));
+        System.out.println(num1 + " * " + num2 + " = " + (num1 * num2));
+        System.out.println(num1 + " / " + num2 + " = " + (num1 / num2));
+        System.out.println(num1 + " % " + num2 + " = " + (num1 % num2));
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="random">
+            <h2>Random Number Generation</h2>
+            
+            <p>Java provides the Random class to generate random numbers, which is useful for games, simulations, and random selections.</p>
+            
+            <div class="code-block">import java.util.Random;
+
+public class RandomExample {
+    public static void main(String[] args) {
+        Random random = new Random();
+        
+        int number = random.nextInt(); // Random integer between -2 billion and +2 billion
+        System.out.println(number);
+        
+        number = random.nextInt(1, 6); // Random integer between 1 and 5 (inclusive)
+        System.out.println(number);
+        
+        // To get from 1 to 6
+        number = random.nextInt(1, 7);
+        System.out.println(number);
+    }
+}</div>
+
+            <h3>Random Double Values</h3>
+            <div class="code-block">Random random = new Random();
+
+double randomDouble = random.nextDouble(); // Between 0.0 and 1.0
+System.out.println(randomDouble);</div>
+
+            <h3>Random Boolean Values</h3>
+            <div class="code-block">Random random = new Random();
+
+boolean isHeads = random.nextBoolean();
+System.out.println(isHeads);
+
+if (isHeads) {
+    System.out.println("HEAD");
+} else {
+    System.out.println("TAILS");
+}</div>
+
+            <div class="note">
+                <p><strong>Note:</strong> Remember to import <code>java.util.Random</code> at the top of your file when using the Random class.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Simple Random Generator</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that generates and displays different types of random values:</p>
+                    <ul>
+                        <li>A random integer between 1 and 100</li>
+                        <li>A random double between 0.0 and 1.0</li>
+                        <li>A random boolean (true/false)</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Output:</h5>
+                        <div class="code-block">Random integer: 42
+Random double: 0.734
+Random boolean: true</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Random;
+
+public class SimpleRandomGenerator {
+    public static void main(String[] args) {
+        Random random = new Random();
+        
+        // Generate random integer between 1 and 100
+        int randomInt = random.nextInt(1, 101);
+        System.out.println("Random integer: " + randomInt);
+        
+        // Generate random double between 0.0 and 1.0
+        double randomDouble = random.nextDouble();
+        System.out.println("Random double: " + randomDouble);
+        
+        // Generate random boolean
+        boolean randomBoolean = random.nextBoolean();
+        System.out.println("Random boolean: " + randomBoolean);
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Dice Roll Simulator</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that simulates rolling a single die (1-6) and displays the result.</p>
+                    <div class="input-output">
+                        <h5>Sample Output:</h5>
+                        <div class="code-block">You rolled: 4</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Random;
+
+public class DiceRoll {
+    public static void main(String[] args) {
+        Random random = new Random();
+        
+        // Generate random number between 1 and 6
+        int diceRoll = random.nextInt(1, 7);
+        
+        System.out.println("You rolled: " + diceRoll);
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="math">
+            <h2>Simple Math Operations</h2>
+            
+            <h3>Java Math Library</h3>
+            <p>Java's Math class provides common mathematical functions and constants that are useful for calculations.</p>
+            
+            <div class="code-block">double result;
+
+System.out.println(Math.PI); // Value of PI
+
+result = Math.pow(2, 5); // 2 to the power of 5: 32
+result = Math.abs(-5);    // Absolute value: 5
+result = Math.sqrt(9);    // Square root: 3
+result = Math.round(3.14); // Round to nearest integer: 3
+result = Math.ceil(3.14);  // Round up: 4
+result = Math.floor(3.99); // Round down: 3
+result = Math.max(10, 20); // Maximum value: 20
+result = Math.min(10, 20); // Minimum value: 10</div>
+            
+            <div class="note">
+                <p><strong>Note:</strong> The Math class is part of the java.lang package, which is automatically imported in every Java program, so you don't need to import it explicitly.</p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise: Calculate Hypotenuse of a Right Triangle</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that calculates the hypotenuse of a right triangle using the Pythagorean theorem: c = √(a² + b²)</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter the length of side a: 3
+Enter the length of side b: 4</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">The hypotenuse (c) is: 5.0</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class HypotenuseCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter the length of side a: ");
+        double a = scanner.nextDouble();
+        
+        System.out.print("Enter the length of side b: ");
+        double b = scanner.nextDouble();
+        
+        // Calculate hypotenuse using Pythagorean theorem
+        double c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+        
+        System.out.println("The hypotenuse (c) is: " + c);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise: Circle Calculations</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that calculates the circumference, area, and volume of a sphere given its radius.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter the radius: 5</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">The circumference is: 31.41592653589793
+The area is: 78.53981633974483
+The volume is: 523.5987755982989</div>
+                    </div>
+                    <p><strong>Formulas:</strong></p>
+                    <ul>
+                        <li>Circumference = 2 × π × radius</li>
+                        <li>Area = π × radius²</li>
+                        <li>Volume of sphere = (4/3) × π × radius³</li>
+                    </ul>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class CircleCalculations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter the radius: ");
+        double radius = scanner.nextDouble();
+        
+        // Calculate circumference, area, and volume
+        double circumference = 2 * Math.PI * radius;
+        double area = Math.PI * Math.pow(radius, 2);
+        double volume = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
+        
+        System.out.println("The circumference is: " + circumference);
+        System.out.println("The area is: " + area);
+        System.out.println("The volume is: " + volume);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="exercises">
+            <h2>Practice Exercises</h2>
+            
+            <div class="exercise">
+                <h3>Exercise 1: Value Swapping</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that asks the user for two integer values, swaps their values without using a third variable, and displays the result.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter first number: 10
+Enter second number: 20</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Before swapping:
+a = 10, b = 20
+After swapping:
+a = 20, b = 10</div>
+                    </div>
+                    <p><strong>Hint:</strong> You can use arithmetic operations to swap values without a temporary variable.</p>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class ValueSwap {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter first number: ");
+        int a = scanner.nextInt();
+        
+        System.out.print("Enter second number: ");
+        int b = scanner.nextInt();
+        
+        System.out.println("Before swapping:");
+        System.out.println("a = " + a + ", b = " + b);
+        
+        // Swap without using a third variable
+        a = a + b;
+        b = a - b;
+        a = a - b;
+        
+        System.out.println("After swapping:");
+        System.out.println("a = " + a + ", b = " + b);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise 2: Currency Converter</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that converts between USD and EUR. Ask the user for the amount and the direction of conversion (USD to EUR or EUR to USD), then display the converted amount.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter the amount: 100
+Enter conversion direction (1 for USD to EUR, 2 for EUR to USD): 1</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">100.0 USD = 92.0 EUR</div>
+                    </div>
+                    <p><strong>Note:</strong> Use an exchange rate of 1 USD = 0.92 EUR.</p>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class CurrencyConverter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        final double EXCHANGE_RATE = 0.92; // 1 USD = 0.92 EUR
+        
+        System.out.print("Enter the amount: ");
+        double amount = scanner.nextDouble();
+        
+        System.out.print("Enter conversion direction (1 for USD to EUR, 2 for EUR to USD): ");
+        int direction = scanner.nextInt();
+        
+        if (direction == 1) {
+            // USD to EUR
+            double convertedAmount = amount * EXCHANGE_RATE;
+            System.out.println(amount + " USD = " + convertedAmount + " EUR");
+        } else if (direction == 2) {
+            // EUR to USD
+            double convertedAmount = amount / EXCHANGE_RATE;
+            System.out.println(amount + " EUR = " + convertedAmount + " USD");
+        } else {
+            System.out.println("Invalid conversion direction. Please enter 1 or 2.");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Time Converter</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that converts seconds into hours, minutes, and remaining seconds. Ask the user for a number of seconds and display the converted time.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter number of seconds: 3665</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">3665 seconds = 1 hour(s), 1 minute(s), and 5 second(s)</div>
+                    </div>
+                    <p><strong>Hint:</strong> Use division and modulus operations to break down the total seconds.</p>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class TimeConverter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter number of seconds: ");
+        int totalSeconds = scanner.nextInt();
+        
+        // Calculate hours, minutes, and remaining seconds
+        int hours = totalSeconds / 3600;
+        int remainingSeconds = totalSeconds % 3600;
+        int minutes = remainingSeconds / 60;
+        int seconds = remainingSeconds % 60;
+        
+        System.out.println(totalSeconds + " seconds = " + hours + " hour(s), " + 
+                          minutes + " minute(s), and " + seconds + " second(s)");
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Day 1 Summary</h2>
+            <div class="note">
+                <p><strong>Great job completing Day 1! 🎉</strong></p>
+                <p>Today you learned:</p>
+                <ul>
+                    <li>How to set up Java development environment</li>
+                    <li>Basic Java syntax and program structure</li>
+                    <li>Different data types and variables</li>
+                    <li>How to get user input using Scanner</li>
+                    <li>How to handle the common Scanner issue with nextLine()</li>
+                    <li>How to use arithmetic operators for calculations</li>
+                    <li>How to generate random numbers using the Random class</li>
+                    <li>How to use Java's Math library for calculations</li>
+                    <li>How to display output to the console</li>
+                </ul>
+                <p><strong>Next Session:</strong> In Day 2, we'll learn about control flow with if/else statements and build more interactive programs!</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Java Bootcamp - Day 1: Java Basics & Setup</p>
+            <p>Complete all exercises to prepare for Day 2!</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('show');
+            
+            if (answer.classList.contains('show')) {
+                button.textContent = 'Hide Answer';
+            } else {
+                button.textContent = 'Show Answer';
+            }
+        }
+    </script>
+</body>
+</html>

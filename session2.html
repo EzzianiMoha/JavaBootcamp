@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Bootcamp - Day 2: Control Flow</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .session-info {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .session-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre;
+        }
+        
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise {
+            background-color: #eafaf1;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise-question {
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d1ecf1;
+        }
+        
+        .exercise-answer.show {
+            display: block;
+        }
+        
+        .exercise-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .exercise-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .input-output {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .input-output h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .learning-objectives {
+            background: #fff9e6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .learning-objectives h3 {
+            color: var(--warning);
+            margin-top: 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .discount-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .discount-table th,
+        .discount-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .discount-table th {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+        
+        .discount-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            nav a {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .comparison-table, .discount-table {
+                font-size: 0.9rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Java Bootcamp - Day 2</h1>
+            <p>Control Flow - Making Decisions in Your Programs</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <ul>
+                <li><a href="#review">Quick Review</a></li>
+                <li><a href="#operators">Operators</a></li>
+                <li><a href="#conditionals">If Statements</a></li>
+                <li><a href="#logical">Logical Operators</a></li>
+                <li><a href="#strings">String Methods</a></li>
+                <li><a href="#substring">substring()</a></li>
+                <li><a href="#ternary">Ternary Operator</a></li>
+                <li><a href="#exercises">Practice Exercises</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <div class="session-info">
+            <h2>Session 2: Control Flow</h2>
+            <p><strong>Duration:</strong> ~2 Hours | <strong>Level:</strong> Beginner</p>
+            <p>Learn how to make decisions in your programs and create interactive applications!</p>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>📚 What You'll Learn Today</h3>
+            <ul>
+                <li>Comparison and logical operators</li>
+                <li>If/else statements for decision making</li>
+                <li>Nested if statements for complex conditions</li>
+                <li>String methods for text manipulation</li>
+                <li>Extract parts of strings with substring()</li>
+                <li>Use ternary operator for concise conditions</li>
+                <li>Build interactive programs with user input</li>
+            </ul>
+        </div>
+
+        <section id="review">
+            <h2>Quick Review from Day 1</h2>
+            
+            <p>Let's quickly review what we learned yesterday:</p>
+            
+            <div class="code-block">import java.util.Scanner;
+
+public class Review {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Variables and data types
+        String name = "John";
+        int age = 25;
+        double height = 1.75;
+        boolean isStudent = true;
+        
+        // User input
+        System.out.print("Enter your name: ");
+        name = scanner.nextLine();
+        
+        // Output
+        System.out.println("Hello " + name);
+        System.out.println("You are " + age + " years old");
+        
+        scanner.close();
+    }
+}</div>
+
+            <div class="exercise">
+                <h3>Warm-up Exercise: Simple Calculator</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that asks for two numbers and performs all basic arithmetic operations.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter first number: 10
+Enter second number: 3</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">10.0 + 3.0 = 13.0
+10.0 - 3.0 = 7.0
+10.0 * 3.0 = 30.0
+10.0 / 3.0 = 3.3333333333333335
+10.0 % 3.0 = 1.0</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter first number: ");
+        double num1 = scanner.nextDouble();
+        
+        System.out.print("Enter second number: ");
+        double num2 = scanner.nextDouble();
+        
+        System.out.println(num1 + " + " + num2 + " = " + (num1 + num2));
+        System.out.println(num1 + " - " + num2 + " = " + (num1 - num2));
+        System.out.println(num1 + " * " + num2 + " = " + (num1 * num2));
+        System.out.println(num1 + " / " + num2 + " = " + (num1 / num2));
+        System.out.println(num1 + " % " + num2 + " = " + (num1 % num2));
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="operators">
+            <h2>Comparison Operators</h2>
+            
+            <p>Comparison operators allow us to compare values and make decisions in our programs.</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>==</td>
+                        <td>Equal to</td>
+                        <td>5 == 5</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>!=</td>
+                        <td>Not equal to</td>
+                        <td>5 != 3</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>&gt;</td>
+                        <td>Greater than</td>
+                        <td>5 &gt; 3</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;</td>
+                        <td>Less than</td>
+                        <td>5 &lt; 3</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>&gt;=</td>
+                        <td>Greater than or equal to</td>
+                        <td>5 &gt;= 5</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;=</td>
+                        <td>Less than or equal to</td>
+                        <td>5 &lt;= 3</td>
+                        <td>false</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="code-block">int x = 10;
+int y = 5;
+
+System.out.println(x == y);  // false
+System.out.println(x != y);  // true
+System.out.println(x > y);   // true
+System.out.println(x < y);   // false
+System.out.println(x >= 10); // true
+System.out.println(y <= 4);  // false</div>
+
+            <div class="warning">
+                <p><strong>Important:</strong> Use <code>==</code> for comparison, not <code>=</code> which is for assignment!</p>
+                <div class="code-block">int age = 25;
+if (age == 18) {  // Correct - comparison
+    System.out.println("You are 18!");
+}
+
+if (age = 18) {   // Error - assignment, not comparison
+    System.out.println("This won't work!");
+}</div>
+            </div>
+        </section>
+        
+        <section id="conditionals">
+            <h2>If Statements</h2>
+            
+            <p>If statements allow your program to make decisions based on conditions.</p>
+            
+            <h3>Simple If Statement</h3>
+            <div class="code-block">int age = 20;
+
+if (age >= 18) {
+    System.out.println("You are an adult");
+}</div>
+
+            <h3>If-Else Statement</h3>
+            <p>Used when you want to execute one block if true, and another if false.</p>
+            <div class="code-block">int score = 75;
+
+if (score >= 50) {
+    System.out.println("You passed!");
+} else {
+    System.out.println("You failed!");
+}</div>
+
+            <h3>Else-If Statements</h3>
+            <p>Used when you have multiple conditions to check.</p>
+            <div class="code-block">int score = 85;
+
+if (score >= 90) {
+    System.out.println("Grade: A");
+} else if (score >= 80) {
+    System.out.println("Grade: B");
+} else if (score >= 70) {
+    System.out.println("Grade: C");
+} else if (score >= 60) {
+    System.out.println("Grade: D");
+} else {
+    System.out.println("Grade: F");
+}</div>
+
+            <div class="note">
+                <p><strong>Note:</strong> The order of conditions matters! Java evaluates conditions from top to bottom and executes the first block where the condition is true.</p>
+            </div>
+
+            <h3>Nested If Statements</h3>
+            <p>You can put if statements inside other if statements for complex conditions.</p>
+            <div class="code-block">int age = 25;
+boolean hasLicense = true;
+
+if (age >= 18) {
+    if (hasLicense) {
+        System.out.println("You can drive!");
+    } else {
+        System.out.println("You need a license to drive");
+    }
+} else {
+    System.out.println("You are too young to drive");
+}</div>
+
+            <div class="exercise">
+                <h3>Exercise: Age Checker</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that checks a person's age and displays appropriate messages:</p>
+                    <ul>
+                        <li>Under 13: "You are a child"</li>
+                        <li>13-17: "You are a teenager"</li>
+                        <li>18-64: "You are an adult"</li>
+                        <li>65 and above: "You are a senior"</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter your age: 16</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">You are a teenager</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class AgeChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        
+        if (age < 13) {
+            System.out.println("You are a child");
+        } else if (age <= 17) {
+            System.out.println("You are a teenager");
+        } else if (age <= 64) {
+            System.out.println("You are an adult");
+        } else {
+            System.out.println("You are a senior");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: French Grading System</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that converts a numerical grade to the French grading system:</p>
+                    <ul>
+                        <li>Note &lt; 10: "Échec" (Failed)</li>
+                        <li>Note &lt; 12: "Passable"</li>
+                        <li>Note &lt; 14: "Assez Bien"</li>
+                        <li>Note &lt; 16: "Bien"</li>
+                        <li>Note &lt; 18: "Très Bien"</li>
+                        <li>Note &lt;= 20: "Excellent"</li>
+                        <li>Note &gt; 20 or &lt; 0: "Erreur" (Error)</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter your grade (0-20): 15.5</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Your result: Bien</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class FrenchGrading {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter your grade (0-20): ");
+        double note = scanner.nextDouble();
+        
+        String result;
+        
+        if (note < 0 || note > 20) {
+            result = "Erreur";
+        } else if (note < 10) {
+            result = "Échec";
+        } else if (note < 12) {
+            result = "Passable";
+        } else if (note < 14) {
+            result = "Assez Bien";
+        } else if (note < 16) {
+            result = "Bien";
+        } else if (note < 18) {
+            result = "Très Bien";
+        } else {
+            result = "Excellent";
+        }
+        
+        System.out.println("Your result: " + result);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="logical">
+            <h2>Logical Operators</h2>
+            
+            <p>Logical operators allow you to combine multiple conditions.</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&&</td>
+                        <td>AND - both conditions must be true</td>
+                        <td>(5 &gt; 3) && (2 &lt; 4)</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>||</td>
+                        <td>OR - at least one condition must be true</td>
+                        <td>(5 &gt; 3) || (2 &gt; 4)</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>!</td>
+                        <td>NOT - reverses the condition</td>
+                        <td>!(5 &gt; 3)</td>
+                        <td>false</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>AND Operator (&&) - Practical Examples</h3>
+            <div class="code-block">int age = 25;
+boolean hasLicense = true;
+
+if (age >= 18 && hasLicense) {
+    System.out.println("You can drive a car!");
+} else {
+    System.out.println("You cannot drive a car");
+}</div>
+
+            <h3>OR Operator (||) - Practical Examples</h3>
+            <div class="code-block">String day = "Saturday";
+
+if (day.equals("Saturday") || day.equals("Sunday")) {
+    System.out.println("It's the weekend!");
+} else {
+    System.out.println("It's a weekday");
+}</div>
+
+            <h3>NOT Operator (!) - Practical Examples</h3>
+            <div class="code-block">boolean isRaining = false;
+
+if (!isRaining) {
+    System.out.println("You don't need an umbrella");
+} else {
+    System.out.println("Take an umbrella");
+}</div>
+
+            <h3>Combining Logical Operators</h3>
+            <div class="code-block">int age = 25;
+boolean isStudent = true;
+double income = 20000;
+
+if ((age >= 18 && age <= 25) && isStudent && income < 25000) {
+    System.out.println("You qualify for student discount!");
+} else {
+    System.out.println("You don't qualify for student discount");
+}</div>
+
+            <div class="note">
+                <p><strong>Remember:</strong> AND (&&) requires ALL conditions to be true, OR (||) requires AT LEAST ONE condition to be true, and NOT (!) reverses the condition.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Login System</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a simple login system that checks username and password against predefined values and provides specific feedback.</p>
+                    <div class="input-output">
+                        <h5>Sample Input 1:</h5>
+                        <div class="code-block">Enter username: admin
+Enter password: password123</div>
+                        <h5>Expected Output 1:</h5>
+                        <div class="code-block">Login successful! Welcome admin</div>
+                        
+                        <h5>Sample Input 2:</h5>
+                        <div class="code-block">Enter username: admin
+Enter password: wrongpass</div>
+                        <h5>Expected Output 2:</h5>
+                        <div class="code-block">Incorrect password!</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class LoginSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        String correctUsername = "admin";
+        String correctPassword = "password123";
+        
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        
+        if (username.equals(correctUsername) && password.equals(correctPassword)) {
+            System.out.println("Login successful! Welcome " + username);
+        } else if (username.equals(correctUsername)) {
+            System.out.println("Incorrect password!");
+        } else if (password.equals(correctPassword)) {
+            System.out.println("Incorrect username!");
+        } else {
+            System.out.println("Both username and password are incorrect!");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strings">
+            <h2>String Methods</h2>
+            
+            <p>Java provides many useful methods for working with strings. These methods help you manipulate and analyze text data.</p>
+            
+            <h3>Common String Methods</h3>
+            
+            <h4>length() - Get String Length</h4>
+            <div class="code-block">String text = "Hello World";
+int length = text.length();
+System.out.println("Length: " + length); // Output: Length: 11</div>
+
+            <h4>charAt() - Get Character at Position</h4>
+            <div class="code-block">String text = "Java";
+char firstChar = text.charAt(0);
+char lastChar = text.charAt(text.length() - 1);
+System.out.println("First: " + firstChar); // Output: First: J
+System.out.println("Last: " + lastChar);   // Output: Last: a</div>
+
+            <h4>indexOf() and lastIndexOf() - Find Character Position</h4>
+            <div class="code-block">String text = "programming";
+int firstM = text.indexOf('m');
+int lastM = text.lastIndexOf('m');
+System.out.println("First 'm': " + firstM); // Output: First 'm': 6
+System.out.println("Last 'm': " + lastM);   // Output: Last 'm': 7</div>
+
+            <h4>toUpperCase() and toLowerCase() - Change Case</h4>
+            <div class="code-block">String text = "Hello World";
+String upper = text.toUpperCase();
+String lower = text.toLowerCase();
+System.out.println("Upper: " + upper); // Output: Upper: HELLO WORLD
+System.out.println("Lower: " + lower); // Output: Lower: hello world</div>
+
+            <h4>trim() - Remove Spaces</h4>
+            <div class="code-block">String text = "   Hello World   ";
+String trimmed = text.trim();
+System.out.println("Trimmed: '" + trimmed + "'"); // Output: Trimmed: 'Hello World'</div>
+
+            <h4>replace() - Replace Characters</h4>
+            <div class="code-block">String text = "Hello World";
+String replaced = text.replace('o', '0');
+System.out.println("Replaced: " + replaced); // Output: Replaced: Hell0 W0rld</div>
+
+            <h4>isEmpty() - Check if String is Empty</h4>
+            <div class="code-block">String text1 = "";
+String text2 = "Hello";
+System.out.println("text1 is empty: " + text1.isEmpty()); // Output: true
+System.out.println("text2 is empty: " + text2.isEmpty()); // Output: false</div>
+
+            <h4>contains() - Check if String Contains Substring</h4>
+            <div class="code-block">String text = "Java Programming";
+System.out.println("Contains 'Java': " + text.contains("Java"));     // Output: true
+System.out.println("Contains 'Python': " + text.contains("Python")); // Output: false</div>
+
+            <h4>equals() and equalsIgnoreCase() - Compare Strings</h4>
+            <div class="code-block">String text1 = "Hello";
+String text2 = "hello";
+String text3 = "HELLO";
+
+System.out.println("equals: " + text1.equals(text2));           // Output: false (case sensitive)
+System.out.println("equalsIgnoreCase: " + text1.equalsIgnoreCase(text2)); // Output: true
+System.out.println("equalsIgnoreCase: " + text1.equalsIgnoreCase(text3)); // Output: true</div>
+
+            <div class="note">
+                <p><strong>Important:</strong> Always use <code>equals()</code> to compare strings, not <code>==</code>. The <code>==</code> operator checks if both references point to the same object, while <code>equals()</code> checks if the content is the same.</p>
+            </div>
+        </section>
+
+        <section id="substring">
+            <h2>substring() Method</h2>
+            
+            <p>The <code>substring()</code> method extracts a portion of a string. It's very useful for working with specific parts of text.</p>
+            
+            <h3>substring() Syntax</h3>
+            <div class="code-block">String substring(int beginIndex)
+String substring(int beginIndex, int endIndex)</div>
+
+            <h3>Basic substring() Examples</h3>
+            <div class="code-block">String text = "Hello World";
+
+// Get substring from index 6 to end
+String part1 = text.substring(6);
+System.out.println(part1); // Output: World
+
+// Get substring from index 0 to 5 (exclusive)
+String part2 = text.substring(0, 5);
+System.out.println(part2); // Output: Hello
+
+// Get substring from index 3 to 8
+String part3 = text.substring(3, 8);
+System.out.println(part3); // Output: lo Wo</div>
+
+            <div class="warning">
+                <p><strong>Important:</strong> The endIndex in <code>substring(beginIndex, endIndex)</code> is exclusive - it goes up to but does not include the character at endIndex.</p>
+            </div>
+
+            <h3>Practical Example: Extract Username and Domain from Email</h3>
+            <div class="code-block">String email = "john.doe@example.com";
+
+// Find the position of '@'
+int atIndex = email.indexOf('@');
+
+// Extract username (everything before '@')
+String username = email.substring(0, atIndex);
+System.out.println("Username: " + username); // Output: Username: john.doe
+
+// Extract domain (everything after '@')
+String domain = email.substring(atIndex + 1);
+System.out.println("Domain: " + domain); // Output: Domain: example.com</div>
+
+            <div class="exercise">
+                <h3>Exercise: Email Analyzer</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that analyzes an email address and displays:</p>
+                    <ul>
+                        <li>Username (part before @)</li>
+                        <li>Domain (part after @)</li>
+                        <li>Whether it's a Gmail account</li>
+                        <li>Whether the username contains numbers</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter email address: alice123@gmail.com</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Username: alice123
+Domain: gmail.com
+Gmail account: Yes
+Username contains numbers: Yes</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class EmailAnalyzer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter email address: ");
+        String email = scanner.nextLine();
+        
+        // Find @ position
+        int atIndex = email.indexOf('@');
+        
+        // Extract username and domain
+        String username = email.substring(0, atIndex);
+        String domain = email.substring(atIndex + 1);
+        
+        // Check if Gmail account
+        boolean isGmail = domain.equalsIgnoreCase("gmail.com");
+        
+        // Check if username contains numbers
+        boolean hasNumbers = false;
+        for (int i = 0; i < username.length(); i++) {
+            if (Character.isDigit(username.charAt(i))) {
+                hasNumbers = true;
+                break;
+            }
+        }
+        
+        System.out.println("Username: " + username);
+        System.out.println("Domain: " + domain);
+        System.out.println("Gmail account: " + (isGmail ? "Yes" : "No"));
+        System.out.println("Username contains numbers: " + (hasNumbers ? "Yes" : "No"));
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+         <section id="ternary">
+            <h2>Ternary Operator</h2>
+            
+            <p>The ternary operator is a shorthand way to write simple if-else statements. It makes your code more concise and readable for simple conditions.</p>
+            
+            <h3>Ternary Operator Syntax</h3>
+            <div class="code-block">condition ? value_if_true : value_if_false</div>
+
+            <h3>Basic Examples</h3>
+            <div class="code-block">int age = 20;
+
+// Using if-else
+String message;
+if (age >= 18) {
+    message = "Adult";
+} else {
+    message = "Minor";
+}
+
+// Using ternary operator
+String message2 = (age >= 18) ? "Adult" : "Minor";
+
+System.out.println(message);  // Output: Adult
+System.out.println(message2); // Output: Adult</div>
+
+            <h3>More Practical Examples</h3>
+            <div class="code-block">int score = 85;
+
+// Determine pass/fail
+String result = (score >= 50) ? "Pass" : "Fail";
+System.out.println("Result: " + result); // Output: Result: Pass
+
+// Find maximum of two numbers
+int a = 10, b = 15;
+int max = (a > b) ? a : b;
+System.out.println("Maximum: " + max); // Output: Maximum: 15
+
+// Check even/odd
+int number = 7;
+String parity = (number % 2 == 0) ? "Even" : "Odd";
+System.out.println(number + " is " + parity); // Output: 7 is Odd</div>
+
+            <h3>Nested Ternary Operator</h3>
+            <p>You can nest ternary operators, but use them sparingly as they can become hard to read.</p>
+            <div class="code-block">int score = 85;
+
+// Grading system with ternary
+String grade = (score >= 90) ? "A" : 
+               (score >= 80) ? "B" : 
+               (score >= 70) ? "C" : 
+               (score >= 60) ? "D" : "F";
+
+System.out.println("Grade: " + grade); // Output: Grade: B</div>
+
+            <div class="note">
+                <p><strong>Best Practice:</strong> Use ternary operators for simple conditions only. For complex logic, stick with if-else statements for better readability.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Number Analyzer</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that asks for an integer and uses ternary operators to:</p>
+                    <ul>
+                        <li>Check if the number is positive, negative, or zero</li>
+                        <li>Check if the number is even or odd</li>
+                        <li>Display both results in a single output</li>
+                    </ul>
+                    
+                    <div class="input-output">
+                        <h5>Sample Input 1:</h5>
+                        <div class="code-block">Enter an integer: 7</div>
+                        <h5>Expected Output 1:</h5>
+                        <div class="code-block">7 is Positive and Odd</div>
+                        
+                        <h5>Sample Input 2:</h5>
+                        <div class="code-block">Enter an integer: -4</div>
+                        <h5>Expected Output 2:</h5>
+                        <div class="code-block">-4 is Negative and Even</div>
+                        
+                        <h5>Sample Input 3:</h5>
+                        <div class="code-block">Enter an integer: 0</div>
+                        <h5>Expected Output 3:</h5>
+                        <div class="code-block">0 is Zero and Even</div>
+                    </div>
+                    
+                    <div class="note">
+                        <p><strong>Hint:</strong> You'll need to use nested ternary operators for the sign check.</p>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class NumberAnalyzer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter an integer: ");
+        int number = scanner.nextInt();
+        
+        // Use ternary operators to check sign and parity
+        String sign = number > 0 ? "Positive" : number < 0 ? "Negative" : "Zero";
+        String parity = number % 2 == 0 ? "Even" : "Odd";
+        
+        System.out.println(number + " is " + sign + " and " + parity);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="exercises">
+            <h2>Practice Exercises</h2>
+            
+            <p>Test your understanding with these practice exercises. Try to solve them on your own before checking the solutions!</p>
+
+            <div class="exercise">
+                <h3>Exercise 1: Number Classifier</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Write a program that:</p>
+                    <ul>
+                        <li>Asks the user for a number</li>
+                        <li>Determines if it's positive, negative, or zero</li>
+                        <li>Determines if it's even or odd</li>
+                        <li>Determines if it's divisible by 5</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter a number: -15</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">-15.0 is negative
+-15.0 is odd
+-15.0 is divisible by 5</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class NumberClassifier {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a number: ");
+        double number = scanner.nextDouble();
+        
+        // Check positive/negative/zero
+        String sign = (number > 0) ? "positive" : 
+                     (number < 0) ? "negative" : "zero";
+        
+        // Check even/odd (only for integers)
+        String parity = (number % 2 == 0) ? "even" : "odd";
+        
+        // Check divisible by 5
+        String divisibleBy5 = (number % 5 == 0) ? "divisible by 5" : "not divisible by 5";
+        
+        System.out.println(number + " is " + sign);
+        System.out.println(number + " is " + parity);
+        System.out.println(number + " is " + divisibleBy5);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Password Strength Checker</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that checks password strength based on:</p>
+                    <ul>
+                        <li>At least 8 characters long</li>
+                        <li>Contains at least one uppercase letter</li>
+                        <li>Contains at least one digit</li>
+                        <li>Contains at least one special character (!@#$%^&*)</li>
+                    </ul>
+                    <p>Provide specific feedback about what's missing.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter password: weakpass</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Password is weak!
+- Must contain at least one uppercase letter
+- Must contain at least one digit
+- Must contain at least one special character</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class PasswordChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        
+        boolean hasUpperCase = !password.equals(password.toLowerCase());
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasSpecial = password.matches(".*[!@#$%^&*].*");
+        boolean hasMinLength = password.length() >= 8;
+        
+        if (hasMinLength && hasUpperCase && hasDigit && hasSpecial) {
+            System.out.println("Password is strong!");
+        } else {
+            System.out.println("Password is weak!");
+            if (!hasMinLength) {
+                System.out.println("- Must be at least 8 characters long");
+            }
+            if (!hasUpperCase) {
+                System.out.println("- Must contain at least one uppercase letter");
+            }
+            if (!hasDigit) {
+                System.out.println("- Must contain at least one digit");
+            }
+            if (!hasSpecial) {
+                System.out.println("- Must contain at least one special character");
+            }
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Simple ATM System</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a simple ATM simulation that:</p>
+                    <ul>
+                        <li>Starts with a balance of $1000</li>
+                        <li>Asks the user if they want to deposit or withdraw</li>
+                        <li>Validates that withdrawal amount doesn't exceed balance</li>
+                        <li>Displays the new balance after each transaction</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Current balance: $1000.0
+Enter 'D' for deposit, 'W' for withdraw: W
+Enter amount: 1500</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Insufficient funds!
+Current balance: $1000.0</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class SimpleATM {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        double balance = 1000.0;
+        
+        System.out.println("Current balance: $" + balance);
+        System.out.print("Enter 'D' for deposit, 'W' for withdraw: ");
+        String transactionType = scanner.nextLine();
+        
+        System.out.print("Enter amount: ");
+        double amount = scanner.nextDouble();
+        
+        if (transactionType.equalsIgnoreCase("D")) {
+            balance += amount;
+            System.out.println("Deposit successful!");
+        } else if (transactionType.equalsIgnoreCase("W")) {
+            if (amount <= balance) {
+                balance -= amount;
+                System.out.println("Withdrawal successful!");
+            } else {
+                System.out.println("Insufficient funds!");
+            }
+        } else {
+            System.out.println("Invalid transaction type!");
+        }
+        
+        System.out.println("Current balance: $" + balance);
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Java Bootcamp - Day 2: Control Flow</p>
+            <p>Practice these concepts and get ready for Day 3: Loops and Arrays!</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('show');
+            button.textContent = answer.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+        }
+    </script>
+</body>
+</html>

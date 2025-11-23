@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Bootcamp - Day 3: Loops & Arrays</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .session-info {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .session-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre;
+        }
+        
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise {
+            background-color: #eafaf1;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise-question {
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d1ecf1;
+        }
+        
+        .exercise-answer.show {
+            display: block;
+        }
+        
+        .exercise-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .exercise-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .input-output {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .input-output h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .learning-objectives {
+            background: #fff9e6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .learning-objectives h3 {
+            color: var(--warning);
+            margin-top: 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav a {
+                padding: 0.75rem 1rem;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Java Bootcamp - Day 3</h1>
+            <p>Loops & Arrays - Working with Repetition and Collections</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#review">Quick Review</a></li>
+                <li><a href="#for-loops">For Loops</a></li>
+                <li><a href="#while-loops">While Loops</a></li>
+                <li><a href="#arrays">Arrays</a></li>
+                <li><a href="#string-manipulation">String Manipulation</a></li>
+                <li><a href="#exercises">Practice Exercises</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <div class="session-info">
+            <h2>Session 3: Loops & Arrays</h2>
+            <p><strong>Duration:</strong> ~2 Hours | <strong>Level:</strong> Beginner</p>
+            <p>Learn how to handle repetitive tasks and work with collections of data!</p>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>📚 What You'll Learn Today</h3>
+            <ul>
+                <li>For loops for controlled repetition</li>
+                <li>While loops for conditional repetition</li>
+                <li>Arrays to store multiple values</li>
+                <li>String manipulation methods</li>
+                <li>Combining loops with arrays for powerful programs</li>
+            </ul>
+        </div>
+
+        <section id="review">
+            <h2>Quick Review from Day 2</h2>
+            
+            <p>Let's quickly review what we learned about control flow and printf():</p>
+            
+            <div class="code-block">import java.util.Scanner;
+
+public class Review {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Control flow with if-else
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        
+        if (age >= 18) {
+            System.out.println("You are an adult");
+        } else {
+            System.out.println("You are a minor");
+        }
+        
+        // Formatted output with printf
+        double price = 19.99;
+        System.out.printf("Price: $%.2f\n", price);
+        
+        scanner.close();
+    }
+}</div>
+
+            <div class="exercise">
+                <h3>Warm-up Exercise: Number Range Checker</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that checks if a number is between 1 and 100, and if it's even or odd.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter a number: 57</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">57 is between 1-100 and is odd</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class NumberRangeChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+        
+        if (number >= 1 && number <= 100) {
+            System.out.print(number + " is between 1-100");
+            if (number % 2 == 0) {
+                System.out.println(" and is even");
+            } else {
+                System.out.println(" and is odd");
+            }
+        } else {
+            System.out.println(number + " is not between 1-100");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="for-loops">
+            <h2>For Loops</h2>
+            
+            <p>For loops are used when you know exactly how many times you want to repeat a block of code.</p>
+            
+            <h3>Basic For Loop Syntax</h3>
+            <div class="code-block">for (initialization; condition; update) {
+    // code to be repeated
+}</div>
+
+            <h3>Simple For Loop Examples</h3>
+            <div class="code-block">// Count from 1 to 5
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Count: " + i);
+}
+
+// Count down from 5 to 1
+for (int i = 5; i >= 1; i--) {
+    System.out.println("Countdown: " + i);
+}
+
+// Even numbers from 2 to 10
+for (int i = 2; i <= 10; i += 2) {
+    System.out.println("Even: " + i);
+}</div>
+
+            <div class="note">
+                <p><strong>Loop Components:</strong></p>
+                <ul>
+                    <li><strong>Initialization:</strong> int i = 1 (start counting at 1)</li>
+                    <li><strong>Condition:</strong> i <= 5 (continue while i is less than or equal to 5)</li>
+                    <li><strong>Update:</strong> i++ (increment i by 1 each time)</li>
+                </ul>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Multiplication Table</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that displays the multiplication table for a given number.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter a number: 7</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+...
+7 x 10 = 70</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class MultiplicationTable {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+        
+        for (int i = 1; i <= 10; i++) {
+            int result = number * i;
+            System.out.printf("%d x %d = %d\n", number, i, result);
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="while-loops">
+            <h2>While Loops</h2>
+            
+            <p>While loops are used when you want to repeat a block of code as long as a condition is true.</p>
+            
+            <h3>Basic While Loop Syntax</h3>
+            <div class="code-block">while (condition) {
+    // code to be repeated
+}</div>
+
+            <h3>Simple While Loop Examples</h3>
+            <div class="code-block">// Count from 1 to 5
+int i = 1;
+while (i <= 5) {
+    System.out.println("Count: " + i);
+    i++;
+}
+
+// User input until they enter "quit"
+Scanner scanner = new Scanner(System.in);
+String input = "";
+while (!input.equals("quit")) {
+    System.out.print("Enter something (type 'quit' to exit): ");
+    input = scanner.nextLine();
+    System.out.println("You entered: " + input);
+}</div>
+
+            <h3>Do-While Loops</h3>
+            <p>Do-while loops always execute at least once, then check the condition.</p>
+            <div class="code-block">int number;
+do {
+    System.out.print("Enter a positive number: ");
+    number = scanner.nextInt();
+} while (number <= 0);
+
+System.out.println("Thank you! You entered: " + number);</div>
+
+            <div class="warning">
+                <p><strong>Important:</strong> Always make sure your while loop has a way to end! Otherwise, you'll create an infinite loop.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Number Guessing Game</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a number guessing game where the user tries to guess a secret number between 1-100.</p>
+                    <div class="input-output">
+                        <h5>Sample Input/Output:</h5>
+                        <div class="code-block">I'm thinking of a number between 1-100
+Enter your guess: 50
+Too high!
+Enter your guess: 25
+Too low!
+Enter your guess: 37
+Congratulations! You guessed it in 3 attempts!</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+import java.util.Random;
+
+public class GuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        
+        int secretNumber = random.nextInt(100) + 1; // 1-100
+        int guess;
+        int attempts = 0;
+        
+        System.out.println("I'm thinking of a number between 1-100");
+        
+        do {
+            System.out.print("Enter your guess: ");
+            guess = scanner.nextInt();
+            attempts++;
+            
+            if (guess > secretNumber) {
+                System.out.println("Too high!");
+            } else if (guess < secretNumber) {
+                System.out.println("Too low!");
+            } else {
+                System.out.println("Congratulations! You guessed it in " + attempts + " attempts!");
+            }
+        } while (guess != secretNumber);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="arrays">
+            <h2>Arrays</h2>
+            
+            <p>Arrays allow you to store multiple values of the same type in a single variable.</p>
+            
+            <h3>Creating and Using Arrays</h3>
+            <div class="code-block">// Declaration and initialization
+int[] numbers = new int[5]; // Array of 5 integers
+String[] names = {"Alice", "Bob", "Charlie"}; // Array with initial values
+
+// Assigning values
+numbers[0] = 10;  // First element
+numbers[1] = 20;  // Second element
+numbers[2] = 30;  // Third element
+
+// Accessing values
+System.out.println(numbers[0]); // Output: 10
+System.out.println(names[1]);   // Output: Bob
+
+// Array length
+System.out.println("Array length: " + numbers.length);</div>
+
+            <h3>Looping Through Arrays</h3>
+            <div class="code-block">int[] scores = {85, 92, 78, 96, 88};
+
+// Using for loop
+for (int i = 0; i < scores.length; i++) {
+    System.out.println("Score " + (i + 1) + ": " + scores[i]);
+}
+
+// Using enhanced for loop (for-each)
+for (int score : scores) {
+    System.out.println("Score: " + score);
+}</div>
+
+            <div class="warning">
+                <p><strong>Important:</strong> Array indices start at 0! The first element is at index 0, not 1.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Student Grades</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that stores student grades in an array and calculates the average.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Student Grades:
+Grade 1: 85
+Grade 2: 92
+Grade 3: 78
+Grade 4: 96
+Grade 5: 88
+Average grade: 87.8</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class StudentGrades {
+    public static void main(String[] args) {
+        int[] grades = {85, 92, 78, 96, 88};
+        int sum = 0;
+        
+        System.out.println("Student Grades:");
+        for (int i = 0; i < grades.length; i++) {
+            System.out.println("Grade " + (i + 1) + ": " + grades[i]);
+            sum += grades[i];
+        }
+        
+        double average = (double) sum / grades.length;
+        System.out.printf("Average grade: %.1f\n", average);
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="string-manipulation">
+            <h2>String Manipulation</h2>
+            
+            <p>Strings have many useful methods for working with text data.</p>
+            
+            <h3>Common String Methods</h3>
+            <div class="code-block">String text = "Hello World";
+
+// Length
+System.out.println("Length: " + text.length()); // 11
+
+// Case conversion
+System.out.println("Uppercase: " + text.toUpperCase()); // HELLO WORLD
+System.out.println("Lowercase: " + text.toLowerCase()); // hello world
+
+// Substring
+System.out.println("Substring: " + text.substring(0, 5)); // Hello
+System.out.println("Substring: " + text.substring(6)); // World
+
+// Character at position
+System.out.println("Char at 0: " + text.charAt(0)); // H
+
+// Finding text
+System.out.println("Contains 'World': " + text.contains("World")); // true
+System.out.println("Index of 'World': " + text.indexOf("World")); // 6
+
+// Replacement
+System.out.println("Replace: " + text.replace("World", "Java")); // Hello Java
+
+// Trimming whitespace
+String spaced = "   Hello   ";
+System.out.println("Trimmed: '" + spaced.trim() + "'"); // 'Hello'</div>
+
+            <h3>Looping Through Strings</h3>
+            <div class="code-block">String word = "Java";
+
+// Loop through characters
+for (int i = 0; i < word.length(); i++) {
+    char c = word.charAt(i);
+    System.out.println("Character " + i + ": " + c);
+}
+
+// Enhanced for loop with character array
+for (char c : word.toCharArray()) {
+    System.out.println("Character: " + c);
+}</div>
+
+            <div class="exercise">
+                <h3>Exercise: Palindrome Checker</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that checks if a word is a palindrome (reads the same forwards and backwards).</p>
+                    <div class="input-output">
+                        <h5>Sample Input 1:</h5>
+                        <div class="code-block">Enter a word: radar</div>
+                        <h5>Expected Output 1:</h5>
+                        <div class="code-block">"radar" is a palindrome!</div>
+                        
+                        <h5>Sample Input 2:</h5>
+                        <div class="code-block">Enter a word: hello</div>
+                        <h5>Expected Output 2:</h5>
+                        <div class="code-block">"hello" is not a palindrome</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class PalindromeChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a word: ");
+        String word = scanner.nextLine().toLowerCase();
+        
+        boolean isPalindrome = true;
+        
+        // Check if word is palindrome
+        for (int i = 0; i < word.length() / 2; i++) {
+            if (word.charAt(i) != word.charAt(word.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+        
+        if (isPalindrome) {
+            System.out.println("\"" + word + "\" is a palindrome!");
+        } else {
+            System.out.println("\"" + word + "\" is not a palindrome");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="exercises">
+            <h2>Practice Exercises</h2>
+            
+            <div class="exercise">
+                <h3>Exercise 1: Fibonacci Sequence</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that displays the first 10 numbers in the Fibonacci sequence.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Fibonacci Sequence:
+0 1 1 2 3 5 8 13 21 34</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class Fibonacci {
+    public static void main(String[] args) {
+        int n = 10;
+        int first = 0, second = 1;
+        
+        System.out.println("Fibonacci Sequence:");
+        for (int i = 1; i <= n; i++) {
+            System.out.print(first + " ");
+            int next = first + second;
+            first = second;
+            second = next;
+        }
+        System.out.println();
+    }
+}</div>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise 2: Array Statistics</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that finds the maximum, minimum, and sum of numbers in an array.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Numbers: [12, 45, 67, 23, 9, 54]
+Maximum: 67
+Minimum: 9
+Sum: 210</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class ArrayStatistics {
+    public static void main(String[] args) {
+        int[] numbers = {12, 45, 67, 23, 9, 54};
+        int max = numbers[0];
+        int min = numbers[0];
+        int sum = 0;
+        
+        // Display numbers
+        System.out.print("Numbers: [");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print(numbers[i]);
+            if (i < numbers.length - 1) {
+                System.out.print(", ");
+            }
+            
+            // Calculate statistics
+            if (numbers[i] > max) max = numbers[i];
+            if (numbers[i] < min) min = numbers[i];
+            sum += numbers[i];
+        }
+        System.out.println("]");
+        
+        System.out.println("Maximum: " + max);
+        System.out.println("Minimum: " + min);
+        System.out.println("Sum: " + sum);
+    }
+}</div>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise 3: Password Generator</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that generates a random password of specified length.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter password length: 8</div>
+                        <h5>Sample Output:</h5>
+                        <div class="code-block">Your random password: aB3#x9@q</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+import java.util.Random;
+
+public class PasswordGenerator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        
+        System.out.print("Enter password length: ");
+        int length = scanner.nextInt();
+        
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                           "abcdefghijklmnopqrstuvwxyz" +
+                           "0123456789" +
+                           "!@#$%^&*";
+        
+        StringBuilder password = new StringBuilder();
+        
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            password.append(characters.charAt(randomIndex));
+        }
+        
+        System.out.println("Your random password: " + password.toString());
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: Shopping List Manager</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that allows users to add items to a shopping list and display them.</p>
+                    <div class="input-output">
+                        <h5>Sample Input/Output:</h5>
+                        <div class="code-block">=== Shopping List Manager ===
+1. Add item
+2. View list
+3. Exit
+Choose option: 1
+Enter item: Milk
+Item added!
+
+Choose option: 1
+Enter item: Bread
+Item added!
+
+Choose option: 2
+Your Shopping List:
+1. Milk
+2. Bread
+
+Choose option: 3
+Goodbye!</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class ShoppingList {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] shoppingList = new String[10]; // Array to store up to 10 items
+        int itemCount = 0;
+        int choice;
+        
+        do {
+            System.out.println("=== Shopping List Manager ===");
+            System.out.println("1. Add item");
+            System.out.println("2. View list");
+            System.out.println("3. Exit");
+            System.out.print("Choose option: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            
+            switch (choice) {
+                case 1:
+                    if (itemCount < shoppingList.length) {
+                        System.out.print("Enter item: ");
+                        String item = scanner.nextLine();
+                        shoppingList[itemCount] = item;
+                        itemCount++;
+                        System.out.println("Item added!\n");
+                    } else {
+                        System.out.println("Shopping list is full!\n");
+                    }
+                    break;
+                    
+                case 2:
+                    System.out.println("Your Shopping List:");
+                    if (itemCount == 0) {
+                        System.out.println("List is empty\n");
+                    } else {
+                        for (int i = 0; i < itemCount; i++) {
+                            System.out.println((i + 1) + ". " + shoppingList[i]);
+                        }
+                        System.out.println();
+                    }
+                    break;
+                    
+                case 3:
+                    System.out.println("Goodbye!");
+                    break;
+                    
+                default:
+                    System.out.println("Invalid choice!\n");
+            }
+        } while (choice != 3);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Day 3 Summary</h2>
+            <div class="note">
+                <p><strong>Amazing work completing Day 3! 🎉</strong></p>
+                <p>Today you learned:</p>
+                <ul>
+                    <li>For loops for controlled repetition</li>
+                    <li>While and do-while loops for conditional repetition</li>
+                    <li>Arrays to store collections of data</li>
+                    <li>String manipulation methods</li>
+                    <li>How to combine loops with arrays for powerful programs</li>
+                </ul>
+                <p><strong>Next Session:</strong> In Day 4, we'll dive into Object-Oriented Programming with classes, objects, and methods!</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Java Bootcamp - Day 3: Loops & Arrays</p>
+            <p>Practice these exercises to master repetition and collections in Java!</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('show');
+            
+            if (answer.classList.contains('show')) {
+                button.textContent = 'Hide Answer';
+            } else {
+                button.textContent = 'Show Answer';
+            }
+        }
+    </script>
+</body>
+</html>
