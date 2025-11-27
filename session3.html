@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Bootcamp - Day 3: Loops, Arrays & Methods</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .session-info {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .session-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            /* position: sticky; */
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0.8rem;
+            transition: background-color 0.3s;
+            
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre;
+        }
+        
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise {
+            background-color: #eafaf1;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise-question {
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d1ecf1;
+        }
+        
+        .exercise-answer.show {
+            display: block;
+        }
+        
+        .exercise-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .exercise-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .input-output {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .input-output h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+        
+        .step:before {
+            content: counter(step-counter);
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+        }
+        
+        .download-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .learning-objectives {
+            background: #fff9e6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .learning-objectives h3 {
+            color: var(--warning);
+            margin-top: 0;
+        }
+
+        .varargs-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .varargs-comparison-table th,
+        .varargs-comparison-table td {
+            border: 1px solid #e1e8ed;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .varargs-comparison-table th {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .varargs-comparison-table thead th {
+            border-bottom: 2px solid #2c3e50;
+        }
+
+        .varargs-comparison-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .varargs-comparison-table tbody tr:nth-child(odd) {
+            background-color: white;
+        }
+
+        .varargs-comparison-table tbody tr:hover {
+            background-color: #e8f4fd;
+            transition: background-color 0.3s ease;
+        }
+
+        .varargs-comparison-table td:first-child {
+            font-weight: 600;
+            color: #2c3e50;
+            background-color: #f1f8ff;
+        }
+
+        .varargs-comparison-table td:nth-child(2),
+        .varargs-comparison-table td:nth-child(3) {
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Checkmark and X styles */
+        .checkmark {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .x-mark {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* Animation for table rows */
+        .varargs-comparison-table tbody tr {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .varargs-comparison-table tbody tr:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav a {
+                padding: 0.75rem 1rem;
+            }
+            
+            .download-links {
+                flex-direction: column;
+            }
+            .varargs-comparison-table {
+                font-size: 0.85rem;
+            }
+            
+            .varargs-comparison-table th,
+            .varargs-comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .varargs-comparison-table th {
+                font-size: 0.9rem;
+            }
+            
+            .varargs-comparison-table td:first-child {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Java Bootcamp - Day 3</h1>
+            <p>Loops, Arrays & Methods - Working with Repetition and Organization</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#review">Quick Review</a></li>
+                <li><a href="#while-loops">While Loops</a></li>
+                <li><a href="#for-loops">For Loops</a></li>
+                <li><a href="#arrays">Arrays</a></li>
+                <li><a href="#methods">Methods</a></li>
+                <li><a href="#varargs">Varargs</a></li>
+                <li><a href="#exercises">Practice Exercises</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <div class="session-info">
+            <h2>Session 3: Loops, Arrays & Methods</h2>
+            <p><strong>Duration:</strong> ~2 Hours | <strong>Level:</strong> Beginner</p>
+            <p>Learn how to handle repetitive tasks, work with collections of data, and organize your code!</p>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>📚 What You'll Learn Today</h3>
+            <ul>
+                <li>While and do-while loops for conditional repetition</li>
+                <li>For loops with break and continue statements</li>
+                <li>Arrays to store multiple values efficiently</li>
+                <li>Methods to organize and reuse your code</li>
+                <li>Variable scope and method overloading</li>
+                <li>Complete hands-on coding exercises</li>
+            </ul>
+        </div>
+
+        <section id="review">
+            <h2>Quick Review from Day 2</h2>
+            
+            <p>Let's quickly review what we learned about control flow and logical operators:</p>
+            
+            <div class="code-block">import java.util.Scanner;
+
+public class Review {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Control flow with if-else
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        
+        if (age >= 18) {
+            System.out.println("You are an adult");
+        } else {
+            System.out.println("You are a minor");
+        }
+        
+        // Logical operators
+        boolean hasLicense = true;
+        if (age >= 18 && hasLicense) {
+            System.out.println("You can drive!");
+        }
+        
+        scanner.close();
+    }
+}</div>
+
+            <div class="exercise">
+                <h3>Warm-up Exercise: Number Range Checker</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that checks if a number is between 1 and 100, and if it's even or odd.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter a number: 57</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">57 is between 1-100 and is odd</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class NumberRangeChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+        
+        if (number >= 1 && number <= 100) {
+            System.out.print(number + " is between 1-100");
+            if (number % 2 == 0) {
+                System.out.println(" and is even");
+            } else {
+                System.out.println(" and is odd");
+            }
+        } else {
+            System.out.println(number + " is not between 1-100");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="while-loops">
+            <h2>While Loops</h2>
+            
+            <p>While loops are used when you want to repeat a block of code as long as a condition is true.</p>
+            
+            <h3>Basic While Loop Syntax</h3>
+            <div class="code-block">while (condition) {
+    // code to be repeated
+}</div>
+
+            <h3>Simple While Loop Examples</h3>
+            <div class="code-block">// Count from 1 to 5
+int i = 1;
+while (i <= 5) {
+    System.out.println("Count: " + i);
+    i++;
+}
+
+// User input until they enter "quit"
+Scanner scanner = new Scanner(System.in);
+String input = "";
+while (!input.equals("quit")) {
+    System.out.print("Enter something (type 'quit' to exit): ");
+    input = scanner.nextLine();
+    System.out.println("You entered: " + input);
+}</div>
+
+            <h3>Do-While Loops</h3>
+            <p>Do-while loops always execute at least once, then check the condition.</p>
+            <div class="code-block">// Input validation with do-while
+Scanner scanner = new Scanner(System.in);
+String name;
+
+do {
+    System.out.print("Enter your name: ");
+    name = scanner.nextLine();
+    
+    if (name.isEmpty()) {
+        System.out.println("Name cannot be empty. Try again.");
+    }
+} while (name.isEmpty());
+
+System.out.println("Hello, " + name);</div>
+
+            <div class="warning">
+                <p><strong>Important:</strong> Always make sure your while loop has a way to end! Otherwise, you'll create an infinite loop.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Number Guessing Game</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a number guessing game where the user tries to guess a secret number between 1-100.</p>
+                    <div class="input-output">
+                        <h5>Sample Input/Output:</h5>
+                        <div class="code-block">I'm thinking of a number between 1-100
+Enter your guess: 50
+Too high!
+Enter your guess: 25
+Too low!
+Enter your guess: 37
+Congratulations! You guessed it in 3 attempts!</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+import java.util.Random;
+
+public class GuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        
+        int secretNumber = random.nextInt(1, 101); // 1-100
+        int guess;
+        int attempts = 0;
+        
+        System.out.println("I'm thinking of a number between 1-100");
+        
+        do {
+            System.out.print("Enter your guess: ");
+            guess = scanner.nextInt();
+            attempts++;
+            
+            if (guess > secretNumber) {
+                System.out.println("Too high!");
+            } else if (guess < secretNumber) {
+                System.out.println("Too low!");
+            } else {
+                System.out.println("Congratulations! You guessed it in " + attempts + " attempts!");
+            }
+        } while (guess != secretNumber);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="for-loops">
+            <h2>For Loops</h2>
+            
+            <p>For loops are used when you know exactly how many times you want to repeat a block of code.</p>
+            
+            <h3>Basic For Loop Syntax</h3>
+            <div class="code-block">for (initialization; condition; update) {
+    // code to be repeated
+}</div>
+
+            <h3>Simple For Loop Examples</h3>
+            <div class="code-block">// Count from 1 to 5
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Count: " + i);
+}
+
+// Count down from 5 to 1
+for (int i = 5; i >= 1; i--) {
+    System.out.println("Countdown: " + i);
+}
+
+// Even numbers from 2 to 10
+for (int i = 2; i <= 10; i += 2) {
+    System.out.println("Even: " + i);
+}</div>
+
+            <h3>Break and Continue Statements</h3>
+            <div class="code-block">// Break - exit loop immediately
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) {
+        break;  // Stop at 5
+    }
+    System.out.println("Number: " + i);
+}
+// Output: 1, 2, 3, 4
+
+// Continue - skip current iteration
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue;  // Skip even numbers
+    }
+    System.out.println("Odd: " + i);
+}
+// Output: 1, 3, 5, 7, 9</div>
+
+            <div class="note">
+                <p><strong>Loop Components:</strong></p>
+                <ul>
+                    <li><strong>Initialization:</strong> int i = 1 (start counting at 1)</li>
+                    <li><strong>Condition:</strong> i <= 5 (continue while i is less than or equal to 5)</li>
+                    <li><strong>Update:</strong> i++ (increment i by 1 each time)</li>
+                </ul>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Multiplication Table</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that displays the multiplication table for a given number.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter a number: 7</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+...
+7 x 10 = 70</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class MultiplicationTable {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+        
+        for (int i = 1; i <= 10; i++) {
+            int result = number * i;
+            System.out.printf("%d x %d = %d\n", number, i, result);
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Skip Even Numbers</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that prints only odd numbers from 1 to 20 using the continue statement.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Odd numbers from 1 to 20:
+1
+3
+5
+7
+9
+11
+13
+15
+17
+19</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class SkipEvenNumbers {
+    public static void main(String[] args) {
+        System.out.println("Odd numbers from 1 to 20:");
+        
+        for (int i = 1; i <= 20; i++) {
+            if (i % 2 == 0) {
+                continue; // Skip even numbers
+            }
+            System.out.println(i);
+        }
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="arrays">
+            <h2>Arrays</h2>
+            
+            <p>Arrays allow you to store multiple values of the same type in a single variable.</p>
+            
+            <h3>Creating and Using Arrays</h3>
+            <div class="code-block">// Declaration and initialization
+int[] numbers = new int[5]; // Array of 5 integers
+String[] names = {"Alice", "Bob", "Charlie"}; // Array with initial values
+
+// Assigning values
+numbers[0] = 10;  // First element
+numbers[1] = 20;  // Second element
+numbers[2] = 30;  // Third element
+
+// Accessing values
+System.out.println(numbers[0]); // Output: 10
+System.out.println(names[1]);   // Output: Bob
+
+// Array length
+System.out.println("Array length: " + numbers.length);</div>
+
+            <h3>Looping Through Arrays</h3>
+            <div class="code-block">int[] scores = {85, 92, 78, 96, 88};
+
+// Using for loop
+for (int i = 0; i < scores.length; i++) {
+    System.out.println("Score " + (i + 1) + ": " + scores[i]);
+}
+
+// Using enhanced for loop (for-each)
+for (int score : scores) {
+    System.out.println("Score: " + score);
+}</div>
+
+            <h3>Array Methods</h3>
+            <div class="code-block">import java.util.Arrays;
+
+int[] numbers = {5, 2, 8, 1, 9};
+
+// Sort array
+Arrays.sort(numbers);
+System.out.println("Sorted: " + Arrays.toString(numbers));
+
+// Fill array with same value
+int[] filled = new int[5];
+Arrays.fill(filled, 42);
+System.out.println("Filled: " + Arrays.toString(filled));</div>
+
+            <div class="warning">
+                <p><strong>Important:</strong> Array indices start at 0! The first element is at index 0, not 1.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Student Grades</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that stores student grades in an array and calculates the average.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Student Grades:
+Grade 1: 85
+Grade 2: 92
+Grade 3: 78
+Grade 4: 96
+Grade 5: 88
+Average grade: 87.8</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class StudentGrades {
+    public static void main(String[] args) {
+        int[] grades = {85, 92, 78, 96, 88};
+        int sum = 0;
+        
+        System.out.println("Student Grades:");
+        for (int i = 0; i < grades.length; i++) {
+            System.out.println("Grade " + (i + 1) + ": " + grades[i]);
+            sum += grades[i];
+        }
+        
+        double average = (double) sum / grades.length;
+        System.out.printf("Average grade: %.1f\n", average);
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Array Search</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that searches for a specific number in an array.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter number to search: 78</div>
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Number 78 found at position 3</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class ArraySearch {
+    public static void main(String[] args) {
+        int[] numbers = {10, 25, 36, 78, 42, 15, 99};
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter number to search: ");
+        int target = scanner.nextInt();
+        
+        boolean found = false;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] == target) {
+                System.out.println("Number " + target + " found at position " + (i + 1));
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Number " + target + " not found in array");
+        }
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="methods">
+            <h2>Methods</h2>
+            
+            <p>Methods allow you to organize your code into reusable blocks.</p>
+            
+            <h3>Void Methods (No Return Value)</h3>
+            <div class="code-block">public class MethodDemo {
+    
+    // Simple void method
+    public static void printWelcome() {
+        System.out.println("Welcome to Java!");
+        System.out.println("Enjoy learning!");
+    }
+    
+    // Method with parameters
+    public static void greetUser(String name, int age) {
+        System.out.println("Hello " + name + "!");
+        System.out.println("You are " + age + " years old.");
+    }
+    
+    public static void main(String[] args) {
+        printWelcome();  // Call the method
+        greetUser("Alice", 25);  // Pass arguments
+    }
+}</div>
+
+            <h3>Return Methods</h3>
+            <div class="code-block">public class ReturnMethods {
+    
+    // Method that returns a value
+    public static double square(double number) {
+        return number * number;
+    }
+    
+    public static String getFullName(String first, String last) {
+        return first + " " + last;
+    }
+    
+    public static boolean isAdult(int age) {
+        return age >= 18;
+    }
+    
+    public static void main(String[] args) {
+        double result = square(5.0);
+        System.out.println("5 squared is: " + result);
+        
+        String fullName = getFullName("John", "Doe");
+        System.out.println("Full name: " + fullName);
+        
+        boolean adult = isAdult(20);
+        System.out.println("Is adult: " + adult);
+    }
+}</div>
+
+            <h3>Method Overloading</h3>
+            <div class="code-block">public class OverloadingDemo {
+    
+    // Different versions of add method
+    public static int add(int a, int b) {
+        return a + b;
+    }
+    
+    public static int add(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    public static double add(double a, double b) {
+        return a + b;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(add(5, 10));        // 15
+        System.out.println(add(5, 10, 15));    // 30
+        System.out.println(add(2.5, 3.7));     // 6.2
+    }
+}</div>
+
+            <div class="note">
+                <p><strong>Variable Scope:</strong> Variables declared inside a method are local to that method and cannot be accessed outside.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Calculator with Methods</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program with methods for basic calculator operations.</p>
+                    <div class="input-output">
+                        <h5>Expected Methods:</h5>
+                        <div class="code-block">- add(a, b)
+- subtract(a, b) 
+- multiply(a, b)
+- divide(a, b)
+- isEven(number)</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class Calculator {
+    
+    public static double add(double a, double b) {
+        return a + b;
+    }
+    
+    public static double subtract(double a, double b) {
+        return a - b;
+    }
+    
+    public static double multiply(double a, double b) {
+        return a * b;
+    }
+    
+    public static double divide(double a, double b) {
+        if (b == 0) {
+            System.out.println("Error: Cannot divide by zero!");
+            return 0;
+        }
+        return a / b;
+    }
+    
+    public static boolean isEven(int number) {
+        return number % 2 == 0;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("5 + 3 = " + add(5, 3));
+        System.out.println("10 - 4 = " + subtract(10, 4));
+        System.out.println("6 * 7 = " + multiply(6, 7));
+        System.out.println("15 / 3 = " + divide(15, 3));
+        System.out.println("Is 8 even? " + isEven(8));
+        System.out.println("Is 7 even? " + isEven(7));
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+                <section id="varargs">
+            <h2>Varargs Methods (Variable Arguments)</h2>
+            
+            <p>Varargs (variable arguments) allow you to pass a variable number of arguments to a method. This eliminates the need for multiple overloaded methods when you want to handle different numbers of parameters.</p>
+
+            <h3>Varargs Syntax</h3>
+            <div class="code-block">// Basic varargs syntax
+returnType methodName(type... parameterName) {
+    // method body
+}
+
+// Example
+public static int sum(int... numbers) {
+    int total = 0;
+    for (int num : numbers) {
+        total += num;
+    }
+    return total;
+}</div>
+
+            <h3>Basic Varargs Examples</h3>
+            
+            <h4>Simple Varargs Method</h4>
+            <div class="code-block">public class VarargsBasic {
+    
+    // Method that can take any number of int arguments
+    public static int add(int... numbers) {
+        int sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
+        return sum;
+    }
+    
+    public static void main(String[] args) {
+        // Calling with different numbers of arguments
+        System.out.println(add(1, 2));           // 3
+        System.out.println(add(1, 2, 3));        // 6
+        System.out.println(add(1, 2, 3, 4, 5));  // 15
+        System.out.println(add());               // 0 (empty)
+    }
+}</div>
+
+            <h4>Varargs with Other Parameters</h4>
+            <p>When using varargs with other parameters, the varargs parameter must be the last one:</p>
+            
+            <div class="code-block">public class VarargsMixed {
+    
+    // Varargs with other parameters (varargs must be last)
+    public static void printStudents(String course, String... students) {
+        System.out.println("Course: " + course);
+        System.out.println("Students:");
+        for (String student : students) {
+            System.out.println("- " + student);
+        }
+        System.out.println("Total students: " + students.length);
+    }
+    
+    public static void main(String[] args) {
+        // Print students with different numbers
+        printStudents("Java", "Alice", "Bob", "Charlie");
+        printStudents("Python", "David"); // Only one student
+        printStudents("Math"); // No students (empty varargs)
+    }
+}</div>
+
+            <h3>Varargs vs Arrays</h3>
+            <p>Varargs are treated as arrays inside the method, so you can also pass arrays directly:</p>
+            
+            <div class="code-block">public class VarargsArray {
+    
+    public static void printNumbers(int... numbers) {
+        System.out.print("Numbers: ");
+        for (int num : numbers) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+    
+    public static void main(String[] args) {
+        // Using individual arguments
+        printNumbers(1, 2, 3);
+        
+        // Using an array
+        int[] nums = {4, 5, 6, 7};
+        printNumbers(nums);
+        
+        // Empty call
+        printNumbers();
+    }
+}</div>
+
+            <h3>Complex Varargs Examples</h3>
+            
+            <h4>Multiple Data Types with Varargs</h4>
+            <div class="code-block">public class ComplexVarargs {
+    
+    // Find average of numbers (handles empty case)
+    public static double average(int... numbers) {
+        if (numbers.length == 0) {
+            return 0.0;
+        }
+        int sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
+        return (double) sum / numbers.length;
+    }
+    
+    // Find maximum value
+    public static int max(int... numbers) {
+        if (numbers.length == 0) {
+            throw new IllegalArgumentException("No numbers provided");
+        }
+        int max = numbers[0];
+        for (int num : numbers) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+    
+    // Format and display messages
+    public static void displayMessages(String header, String... messages) {
+        System.out.println("=== " + header + " ===");
+        if (messages.length == 0) {
+            System.out.println("No messages to display");
+        } else {
+            for (int i = 0; i < messages.length; i++) {
+                System.out.println((i + 1) + ". " + messages[i]);
+            }
+        }
+        System.out.println();
+    }
+    
+    public static void main(String[] args) {
+        // Average examples
+        System.out.println("Average: " + average(10, 20, 30));  // 20.0
+        System.out.println("Average: " + average(5, 15, 25, 35)); // 20.0
+        
+        // Max examples
+        System.out.println("Max: " + max(5, 2, 8, 1, 9));  // 9
+        
+        // Display messages
+        displayMessages("Important Notes", "Learn Java", "Practice daily", "Build projects");
+        displayMessages("Reminders"); // No messages
+    }
+}</div>
+
+            <div class="warning">
+                <p><strong>Important Rules for Varargs:</strong></p>
+                <ul>
+                    <li>Only one varargs parameter per method</li>
+                    <li>Varargs must be the last parameter in the method signature</li>
+                    <li>Varargs are treated as arrays inside the method</li>
+                    <li>You can pass an array instead of individual values</li>
+                    <li>Varargs can be empty (zero arguments)</li>
+                </ul>
+            </div>
+
+            <h3>Varargs vs Method Overloading</h3>
+            <p>Varargs can often replace multiple overloaded methods. Compare these two approaches:</p>
+            
+            <div class="code-block">// WITHOUT VARARGS (multiple overloaded methods)
+public class WithoutVarargs {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+    
+    public static int add(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    public static int add(int a, int b, int c, int d) {
+        return a + b + c + d;
+    }
+    // Would need more methods for more parameters...
+}
+
+// WITH VARARGS (single method)
+public class WithVarargs {
+    public static int add(int... numbers) {
+        int sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
+        return sum;
+    }
+    // Handles any number of parameters!
+}</div>
+
+            <table class="varargs-comparison-table">
+    <thead>
+        <tr>
+            <th>Situation</th>
+            <th>Use Method Overloading</th>
+            <th>Use Varargs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Fixed number of parameters</strong></td>
+            <td class="checkmark">✓ Better choice</td>
+            <td class="x-mark">❌ Not necessary</td>
+        </tr>
+        <tr>
+            <td><strong>Variable number of parameters</strong></td>
+            <td class="x-mark">❌ Many methods needed</td>
+            <td class="checkmark">✓ Perfect fit</td>
+        </tr>
+        <tr>
+            <td><strong>Type safety</strong></td>
+            <td class="checkmark">✓ Compile-time checking</td>
+            <td class="x-mark">❌ Runtime checking only</td>
+        </tr>
+        <tr>
+            <td><strong>Code maintenance</strong></td>
+            <td class="x-mark">❌ Multiple methods to update</td>
+            <td class="checkmark">✓ Single method to maintain</td>
+        </tr>
+        <tr>
+            <td><strong>Readability</strong></td>
+            <td class="checkmark">✓ Clear parameter expectations</td>
+            <td class="checkmark">✓ Flexible and concise</td>
+        </tr>
+    </tbody>
+</table>
+
+            <div class="note">
+                <p><strong>Best Practice:</strong> Use varargs when you need flexibility in the number of parameters, but prefer method overloading when you have a fixed, small number of well-defined parameter combinations.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise: Flexible Calculator with Varargs</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a calculator class that uses varargs to handle mathematical operations with any number of inputs.</p>
+                    <ul>
+                        <li><code>sum(numbers...)</code> - returns sum of all numbers</li>
+                        <li><code>product(numbers...)</code> - returns product of all numbers</li>
+                        <li><code>average(numbers...)</code> - returns average (handle empty case)</li>
+                        <li><code>findMax(numbers...)</code> - returns largest number</li>
+                        <li><code>findMin(numbers...)</code> - returns smallest number</li>
+                        <li><code>joinStrings(separator, strings...)</code> - joins strings with separator</li>
+                    </ul>
+                    
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Sum: 15
+Product: 120
+Average: 3.0
+Max: 5
+Min: 1
+Joined: Java-Python-C++</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class FlexibleCalculator {
+    
+    public static int sum(int... numbers) {
+        int total = 0;
+        for (int num : numbers) {
+            total += num;
+        }
+        return total;
+    }
+    
+    public static int product(int... numbers) {
+        if (numbers.length == 0) {
+            return 0;
+        }
+        int result = 1;
+        for (int num : numbers) {
+            result *= num;
+        }
+        return result;
+    }
+    
+    public static double average(int... numbers) {
+        if (numbers.length == 0) {
+            return 0.0;
+        }
+        return (double) sum(numbers) / numbers.length;
+    }
+    
+    public static int findMax(int... numbers) {
+        if (numbers.length == 0) {
+            throw new IllegalArgumentException("No numbers provided");
+        }
+        int max = numbers[0];
+        for (int num : numbers) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+    
+    public static int findMin(int... numbers) {
+        if (numbers.length == 0) {
+            throw new IllegalArgumentException("No numbers provided");
+        }
+        int min = numbers[0];
+        for (int num : numbers) {
+            if (num < min) {
+                min = num;
+            }
+        }
+        return min;
+    }
+    
+    public static String joinStrings(String separator, String... strings) {
+        if (strings.length == 0) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder(strings[0]);
+        for (int i = 1; i < strings.length; i++) {
+            result.append(separator).append(strings[i]);
+        }
+        return result.toString();
+    }
+    
+    public static void main(String[] args) {
+        // Test the calculator methods
+        System.out.println("Sum: " + sum(1, 2, 3, 4, 5));           // 15
+        System.out.println("Product: " + product(1, 2, 3, 4, 5));   // 120
+        System.out.println("Average: " + average(1, 2, 3, 4, 5));   // 3.0
+        System.out.println("Max: " + findMax(1, 5, 2, 4, 3));       // 5
+        System.out.println("Min: " + findMin(1, 5, 2, 4, 3));       // 1
+        System.out.println("Joined: " + joinStrings("-", "Java", "Python", "C++")); // Java-Python-C++
+        
+        // Edge cases
+        System.out.println("Empty sum: " + sum());                  // 0
+        System.out.println("Empty average: " + average());          // 0.0
+        System.out.println("Empty join: '" + joinStrings("-") + "'"); // ''
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="exercises">
+            <h2>Practice Exercises</h2>
+            
+            <div class="exercise">
+                <h3>Exercise 1: Array Statistics</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that finds the maximum, minimum, and sum of numbers in an array.</p>
+                    <div class="input-output">
+                        <h5>Expected Output:</h5>
+                        <div class="code-block">Numbers: [12, 45, 67, 23, 9, 54]
+Maximum: 67
+Minimum: 9
+Sum: 210</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class ArrayStatistics {
+    public static void main(String[] args) {
+        int[] numbers = {12, 45, 67, 23, 9, 54};
+        int max = numbers[0];
+        int min = numbers[0];
+        int sum = 0;
+        
+        // Display numbers
+        System.out.print("Numbers: [");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print(numbers[i]);
+            if (i < numbers.length - 1) {
+                System.out.print(", ");
+            }
+            
+            // Calculate statistics
+            if (numbers[i] > max) max = numbers[i];
+            if (numbers[i] < min) min = numbers[i];
+            sum += numbers[i];
+        }
+        System.out.println("]");
+        
+        System.out.println("Maximum: " + max);
+        System.out.println("Minimum: " + min);
+        System.out.println("Sum: " + sum);
+    }
+}</div>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercise 2: Password Generator</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that generates a random password of specified length.</p>
+                    <div class="input-output">
+                        <h5>Sample Input:</h5>
+                        <div class="code-block">Enter password length: 8</div>
+                        <h5>Sample Output:</h5>
+                        <div class="code-block">Your random password: aB3#x9@q</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+import java.util.Random;
+
+public class PasswordGenerator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        
+        System.out.print("Enter password length: ");
+        int length = scanner.nextInt();
+        
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                           "abcdefghijklmnopqrstuvwxyz" +
+                           "0123456789" +
+                           "!@#$%^&*";
+        
+        StringBuilder password = new StringBuilder();
+        
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            password.append(characters.charAt(randomIndex));
+        }
+        
+        System.out.println("Your random password: " + password.toString());
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Student Grade System (Intermediate)</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that manages student grades with the following features:</p>
+                    <ul>
+                        <li>Ask how many students</li>
+                        <li>Create array for student grades</li>
+                        <li>Fill array with user input</li>
+                        <li>Calculate average grade</li>
+                        <li>Find highest and lowest grades</li>
+                        <li>Display all results</li>
+                    </ul>
+                    <div class="input-output">
+                        <h5>Sample Output:</h5>
+                        <div class="code-block">Number of students: 3
+Enter grade for student 1: 85
+Enter grade for student 2: 92
+Enter grade for student 3: 78
+
+--- Results ---
+Grades: [85, 92, 78]
+Average: 85.0
+Highest: 92
+Lowest: 78</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.Scanner;
+
+public class StudentGradeSystem {
+    
+    public static double calculateAverage(int[] grades) {
+        int sum = 0;
+        for (int grade : grades) {
+            sum += grade;
+        }
+        return (double) sum / grades.length;
+    }
+    
+    public static int findHighest(int[] grades) {
+        int highest = grades[0];
+        for (int grade : grades) {
+            if (grade > highest) {
+                highest = grade;
+            }
+        }
+        return highest;
+    }
+    
+    public static int findLowest(int[] grades) {
+        int lowest = grades[0];
+        for (int grade : grades) {
+            if (grade < lowest) {
+                lowest = grade;
+            }
+        }
+        return lowest;
+    }
+    
+    public static void displayGrades(int[] grades) {
+        System.out.print("Grades: [");
+        for (int i = 0; i < grades.length; i++) {
+            System.out.print(grades[i]);
+            if (i < grades.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Number of students: ");
+        int numStudents = scanner.nextInt();
+        
+        int[] grades = new int[numStudents];
+        
+        // Input grades
+        for (int i = 0; i < numStudents; i++) {
+            System.out.print("Enter grade for student " + (i + 1) + ": ");
+            grades[i] = scanner.nextInt();
+        }
+        
+        // Calculate results
+        double average = calculateAverage(grades);
+        int highest = findHighest(grades);
+        int lowest = findLowest(grades);
+        
+        // Display results
+        System.out.println("\n--- Results ---");
+        displayGrades(grades);
+        System.out.println("Average: " + average);
+        System.out.println("Highest: " + highest);
+        System.out.println("Lowest: " + lowest);
+        
+        scanner.close();
+    }
+}</div>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: Number Pattern Generator (Hard)</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a program that generates different number patterns using nested loops.</p>
+                    <div class="input-output">
+                        <h5>Sample Output 1 (Pyramid):</h5>
+                        <div class="code-block">   1
+  121
+ 12321
+1234321</div>
+                        <h5>Sample Output 2 (Multiplication Table):</h5>
+                        <div class="code-block">1   2   3   4   5
+2   4   6   8   10
+3   6   9   12  15
+4   8   12  16  20
+5   10  15  20  25</div>
+                    </div>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class NumberPatterns {
+    
+    public static void printPyramid(int size) {
+        System.out.println("Pyramid Pattern:");
+        for (int i = 1; i <= size; i++) {
+            // Print spaces
+            for (int j = 1; j <= size - i; j++) {
+                System.out.print(" ");
+            }
+            // Print increasing numbers
+            for (int j = 1; j <= i; j++) {
+                System.out.print(j);
+            }
+            // Print decreasing numbers
+            for (int j = i - 1; j >= 1; j--) {
+                System.out.print(j);
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void printMultiplicationTable(int size) {
+        System.out.println("\nMultiplication Table:");
+        for (int i = 1; i <= size; i++) {
+            for (int j = 1; j <= size; j++) {
+                System.out.print(i * j);
+                if (i * j < 10) {
+                    System.out.print("   ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void main(String[] args) {
+        printPyramid(4);
+        printMultiplicationTable(5);
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Day 3 Summary</h2>
+            <div class="note">
+                <p><strong>Amazing work completing Day 3! 🎉</strong></p>
+                <p>Today you learned:</p>
+                <ul>
+                    <li>While and do-while loops for conditional repetition</li>
+                    <li>For loops with break and continue statements</li>
+                    <li>Arrays to store collections of data</li>
+                    <li>Methods to organize and reuse code</li>
+                    <li>Method overloading and variable scope</li>
+                    <li>How to combine loops with arrays for powerful programs</li>
+                </ul>
+                <p><strong>Next Session:</strong> In Day 4, we'll dive into Object-Oriented Programming with classes, objects, and more advanced concepts!</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Java Bootcamp - Day 3: Loops, Arrays & Methods</p>
+            <p>Practice these exercises to master repetition and code organization in Java!</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('show');
+            
+            if (answer.classList.contains('show')) {
+                button.textContent = 'Hide Answer';
+            } else {
+                button.textContent = 'Show Answer';
+            }
+        }
+    </script>
+</body>
+</html>
