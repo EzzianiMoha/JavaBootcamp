@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 5-Day Bootcamp</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bootcamp-days {
+            padding: 4rem 0;
+        }
+        
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .day-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .day-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+        
+        .day-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .day-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .day-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .day-duration {
+            background: var(--light);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+        
+        .day-topics {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        
+        .day-topics li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .day-topics li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .day-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .day-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .certificate-day {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: 3px solid #ffd700;
+        }
+        
+        .certificate-day .day-number {
+            color: #b8860b;
+        }
+        
+        .bootcamp-info {
+            background: white;
+            padding: 4rem 0;
+            margin-top: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .info-card {
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary);
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .instructor {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .instructor-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .instructor h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .instructor p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        .prerequisites {
+            background: #fff9e6;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .prerequisites h3 {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .days-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>Java 5-Day Bootcamp</h1>
+                <p>Get started with Java programming in just 2 hours a day! Perfect for complete beginners.</p>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="bootcamp-days">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">5-Day Learning Journey</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                Each session is carefully designed to be completed in 2 hours, with hands-on practice and immediate application.
+            </p>
+            
+            <div class="prerequisites">
+                <h3>Perfect for Complete Beginners!</h3>
+                <p>No programming experience needed. By the end of this bootcamp, you'll:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Understand Java fundamentals</li>
+                    <li>Write your own programs</li>
+                    <li>Create simple applications</li>
+                    <li>Receive a certificate of completion</li>
+                </ul>
+            </div>
+            
+            <div class="days-grid">
+                <!-- Day 1 -->
+                <div class="day-card">
+                    <div class="day-number">01</div>
+                    <h3 class="day-title">Java Basics & Setup</h3>
+                    <div class="day-duration">2 Hours</div>
+                    <ul class="day-topics">
+                        <li>Install Java & IntelliJ IDEA</li>
+                        <li>Your First "Hello World" Program</li>
+                        <li>Variables and Data Types</li>
+                        <li>User Input with Scanner</li>
+                        <li>Arithmetic Operators & Math Operations</li>
+                        <li>Random Number Generation</li>
+                        <li>Hands-on Exercises & Projects</li>
+                    </ul>
+                    <a href="session1.html" class="day-link">Start Day 1</a>
+                </div>
+                
+                <!-- Day 2 -->
+                <div class="day-card">
+                    <div class="day-number">02</div>
+                    <h3 class="day-title">Control Flow & Decision Making</h3>
+                    <div class="day-duration">2 Hours</div>
+                    <ul class="day-topics">
+                        <li>Comparison & Logical Operators</li>
+                        <li>If/Else Statements</li>
+                        <li>Nested If Statements</li>
+                        <li>String Methods & Manipulation</li>
+                        <li>Ternary Operator</li>
+                        <li>Switch Statements (Traditional & Enhanced)</li>
+                        <li>Interactive Programs & Validation</li>
+                    </ul>
+                    <a href="session2.html" class="day-link">Start Day 2</a>
+                </div>
+                
+                <!-- Day 3 -->
+                <div class="day-card">
+                    <div class="day-number">03</div>
+                    <h3 class="day-title">Loops, Arrays & Methods</h3>
+                    <div class="day-duration">2 Hours</div>
+                    <ul class="day-topics">
+                        <li>While & Do-While Loops</li>
+                        <li>For Loops with Break & Continue</li>
+                        <li>Arrays & Array Methods</li>
+                        <li>Methods & Method Overloading</li>
+                        <li>Variable Scope</li>
+                        <li>Varargs (Variable Arguments)</li>
+                        <li>Number Guessing Game & Array Projects</li>
+                    </ul>
+                    <a href="session3.html" class="day-link">Start Day 3</a>
+                </div>
+                
+                <!-- Day 4 -->
+                <div class="day-card">
+                    <div class="day-number">04</div>
+                    <h3 class="day-title">Introduction to OOP</h3>
+                    <div class="day-duration">2 Hours</div>
+                    <ul class="day-topics">
+                        <li>What is Object-Oriented Programming?</li>
+                        <li>Creating Your First Class</li>
+                        <li>Objects and Methods</li>
+                        <li>Constructors</li>
+                        <li>Simple Bank Account Project</li>
+                    </ul>
+                    <a href="sceance4.html" class="day-link">Start Day 4</a>
+                </div>
+                
+                <!-- Day 5 -->
+                <div class="day-card certificate-day">
+                    <div class="day-number">05</div>
+                    <h3 class="day-title">Final Project & Celebration</h3>
+                    <div class="day-duration">2 Hours</div>
+                    <ul class="day-topics">
+                        <li>Build a Simple Student Management System</li>
+                        <li>Code Review & Best Practices</li>
+                        <li>Q&A Session</li>
+                        <li>Certificate Award Ceremony</li>
+                        <li>Next Steps in Your Java Journey</li>
+                    </ul>
+                    <a href="sceance5.html" class="day-link">Start Day 5</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="bootcamp-info">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 2.2rem;">What Makes This Bootcamp Special</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🏃‍♂️ Bite-Sized Learning</h3>
+                    <p>Just 2 hours per day - perfect for busy schedules. No overwhelming information overload.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>👨‍🏫 Hands-On Practice</h3>
+                    <p>Learn by doing with practical exercises and mini-projects after each concept.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🎯 Focused Curriculum</h3>
+                    <p>We cover only the most essential Java concepts you need to get started programming.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🏆 Certificate of Completion</h3>
+                    <p>Receive a recognized certificate to showcase your new programming skills.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="instructor">
+            <div class="instructor-content">
+                <h2>Your Learning Journey</h2>
+                <p>This bootcamp is designed to take you from "I've never programmed before" to "I can write Java programs" in just one week.</p>
+                <p>Each day builds on the previous one, with plenty of practice and support along the way. By Day 5, you'll have built real projects and earned your certificate!</p>
+                <p style="font-style: italic; margin-top: 1.5rem;">"The best way to learn programming is to start coding from day one - and that's exactly what we do!"</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Java 5-Day Bootcamp - Start Your Programming Journey Today!</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Complete all 5 days and receive your certificate of completion.</p>
+        </div>
+    </footer>
+</body>
+</html>
