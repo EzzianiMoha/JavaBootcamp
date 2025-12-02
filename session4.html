@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Bootcamp - Day 4: Object-Oriented Programming Fundamentals</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .session-info {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .session-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: "Java Code";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--secondary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            border-radius: 0 0 4px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .code-explanation {
+            background: #f8f9fa;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95rem;
+        }
+        
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .exercise {
+            background-color: #eafaf1;
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .exercise.intermediate {
+            background-color: #fff9e6;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .exercise-question {
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d1ecf1;
+        }
+        
+        .exercise-answer.show {
+            display: block;
+        }
+        
+        .exercise-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .exercise-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .input-output {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        
+        .input-output h5 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .learning-objectives {
+            background: #fff9e6;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 6px solid var(--warning);
+        }
+        
+        .learning-objectives h3 {
+            color: var(--warning);
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-left: 0.75rem;
+        }
+        
+        .difficulty-beginner {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .difficulty-intermediate {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .concept-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .concept-highlight h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .step-by-step {
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-by-step h4 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .visual-explanation {
+            background: #e8f4fd;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .visual-explanation h4 {
+            color: var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            nav a {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Java Bootcamp - Day 4</h1>
+            <p>Object-Oriented Programming Fundamentals - Building Real-World Applications</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <ul>
+                <li><a href="#oop-intro">OOP Introduction</a></li>
+                <li><a href="#constructors">Constructors</a></li>
+                <li><a href="#arrays-objects">Arrays of Objects</a></li>
+                <li><a href="#static">Static Keyword</a></li>
+                <li><a href="#inheritance">Inheritance</a></li>
+                <li><a href="#polymorphism">Polymorphism</a></li>
+                <li><a href="#encapsulation">Encapsulation</a></li>
+                <li><a href="#exercises">Practice Exercises</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <div class="session-info">
+            <h2>Session 4: Object-Oriented Programming Fundamentals</h2>
+            <p><strong>Duration:</strong> ~2 Hours | <strong>Level:</strong> Intermediate</p>
+            <p>Learn how to structure your code using Object-Oriented Programming principles!</p>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 What You'll Learn Today</h3>
+            <ul>
+                <li>Object-Oriented Programming concepts and principles</li>
+                <li>Constructors and method overloading</li>
+                <li>Working with arrays of objects</li>
+                <li>Static methods and variables</li>
+                <li>Inheritance and method overriding</li>
+                <li>Polymorphism and abstraction</li>
+                <li>Getters, setters, and encapsulation</li>
+                <li>Build a complete Student Management System</li>
+            </ul>
+        </div>
+
+        <section id="oop-intro">
+            <h2>1. Object-Oriented Programming (OOP)</h2>
+            
+            <div class="concept-highlight">
+                <h3>🚀 What is OOP?</h3>
+                <p>Object-Oriented Programming is a programming paradigm that organizes software design around objects rather than functions and logic.</p>
+            </div>
+            
+            <h3>Four Pillars of OOP</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Pillar</th>
+                        <th>Description</th>
+                        <th>Real-World Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Encapsulation</strong></td>
+                        <td>Bundling data and methods that operate on that data within a single unit (class)</td>
+                        <td>A car's dashboard - you can use controls without knowing engine details</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inheritance</strong></td>
+                        <td>Creating new classes based on existing classes to reuse code</td>
+                        <td>Different types of vehicles (car, truck, motorcycle) inheriting from Vehicle</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Polymorphism</strong></td>
+                        <td>Objects of different types can be accessed through the same interface</td>
+                        <td>Different animals making different sounds when you call "makeSound()"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Abstraction</strong></td>
+                        <td>Hiding complex implementation details and showing only essential features</td>
+                        <td>Using a phone without knowing how the touchscreen works internally</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Understanding Classes and Objects</h3>
+            
+            <div class="step-by-step">
+                <h4>📝 Class vs Object</h4>
+                <p><strong>Class:</strong> A blueprint or template (like a house blueprint)</p>
+                <p><strong>Object:</strong> An instance of a class (like an actual house built from the blueprint)</p>
+            </div>
+
+            <h3>Your First Class - Step by Step</h3>
+            <div class="code-block">// 1. Class Declaration
+public class Student {
+    // 2. Instance Variables (attributes/properties)
+    String name;
+    int age;
+    double gpa;
+    
+    // 3. Instance Method (behavior)
+    public void displayInfo() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("GPA: " + gpa);
+    }
+}</div>
+
+            <div class="code-explanation">
+                <p><strong>Step-by-Step Breakdown:</strong></p>
+                <ol>
+                    <li><code>public class Student</code> - Declares a class named Student</li>
+                    <li><code>String name; int age; double gpa;</code> - Instance variables that each object will have</li>
+                    <li><code>displayInfo()</code> - A method that objects can perform</li>
+                </ol>
+            </div>
+
+            <h3>Creating and Using Objects</h3>
+            <div class="code-block">public class Main {
+    public static void main(String[] args) {
+        // Step 1: Create objects using the 'new' keyword
+        Student student1 = new Student();
+        Student student2 = new Student();
+        
+        // Step 2: Set object properties using dot notation
+        student1.name = "Alice";
+        student1.age = 20;
+        student1.gpa = 3.8;
+        
+        student2.name = "Bob";
+        student2.age = 22;
+        student2.gpa = 3.5;
+        
+        // Step 3: Call object methods
+        System.out.println("=== Student 1 ===");
+        student1.displayInfo();
+        
+        System.out.println("\n=== Student 2 ===");
+        student2.displayInfo();
+    }
+}</div>
+
+            <div class="code-explanation">
+                <p><strong>Output:</strong></p>
+                <div class="code-block">=== Student 1 ===
+Name: Alice
+Age: 20
+GPA: 3.8
+
+=== Student 2 ===
+Name: Bob
+Age: 22
+GPA: 3.5</div>
+            </div>
+        </section>
+
+        <section id="constructors">
+            <h2>2. Constructors</h2>
+            
+            <div class="concept-highlight">
+                <h3>🔧 What are Constructors?</h3>
+                <p>Constructors are special methods that are automatically called when an object is created. They initialize the object's state.</p>
+            </div>
+
+            <h3>Default Constructor</h3>
+            <div class="code-block">public class Car {
+    String brand;
+    String model;
+    int year;
+    
+    // Default constructor - no parameters
+    // If you don't create any constructor, Java provides this automatically
+    public Car() {
+        brand = "Unknown";
+        model = "Unknown";
+        year = 2023;
+        System.out.println("Default constructor called!");
+    }
+    
+    public void displayInfo() {
+        System.out.println(brand + " " + model + " (" + year + ")");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car car1 = new Car();  // Default constructor is called
+        car1.displayInfo();    // Output: Unknown Unknown (2023)
+    }
+}</div>
+
+            <h3>Parameterized Constructor</h3>
+            <div class="code-block">public class Car {
+    String brand;
+    String model;
+    int year;
+    
+    // Parameterized constructor - takes parameters to initialize object
+    public Car(String carBrand, String carModel, int carYear) {
+        brand = carBrand;
+        model = carModel;
+        year = carYear;
+        System.out.println("Parameterized constructor called!");
+    }
+    
+    public void displayInfo() {
+        System.out.println(brand + " " + model + " (" + year + ")");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Using parameterized constructor
+        Car car2 = new Car("Toyota", "Camry", 2022);
+        car2.displayInfo();  // Output: Toyota Camry (2022)
+    }
+}</div>
+
+            <h3>3. Constructor Overloading</h3>
+            <p>You can have multiple constructors with different parameters - this is called constructor overloading.</p>
+
+            <div class="code-block">public class Car {
+    String brand;
+    String model;
+    int year;
+    double price;
+    
+    // Constructor 1: Default (no parameters)
+    public Car() {
+        brand = "Unknown";
+        model = "Unknown";
+        year = 2023;
+        price = 0.0;
+        System.out.println("Default constructor called");
+    }
+    
+    // Constructor 2: Brand and model only
+    public Car(String brand, String model) {
+        this.brand = brand;  // 'this' refers to current object
+        this.model = model;
+        this.year = 2023;
+        this.price = 0.0;
+        System.out.println("2-parameter constructor called");
+    }
+    
+    // Constructor 3: All parameters
+    public Car(String brand, String model, int year, double price) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.price = price;
+        System.out.println("Full parameter constructor called");
+    }
+    
+    public void displayInfo() {
+        System.out.println(brand + " " + model + " (" + year + ") - $" + price);
+    }
+}</div>
+
+            <div class="code-explanation">
+                <p><strong>Using different constructors:</strong></p>
+                <div class="code-block">public class Main {
+    public static void main(String[] args) {
+        Car car1 = new Car();                    // Uses default constructor
+        Car car2 = new Car("Toyota", "Camry");   // Uses 2-parameter constructor
+        Car car3 = new Car("BMW", "X5", 2022, 65000.0);  // Uses full constructor
+        
+        car1.displayInfo();  // Unknown Unknown (2023) - $0.0
+        car2.displayInfo();  // Toyota Camry (2023) - $0.0
+        car3.displayInfo();  // BMW X5 (2022) - $65000.0
+    }
+}</div>
+            </div>
+
+            <div class="note">
+                <p><strong>Understanding 'this' keyword:</strong> The <code>this</code> keyword refers to the current object instance. It's used to distinguish between instance variables and parameters with the same name. Without 'this', Java would be confused about which variable you mean.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Practice: Book Class with Constructors</h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a Book class with:</p>
+                    <ul>
+                        <li>Three constructors (default, title-only, full parameters)</li>
+                        <li>Instance variables: title, author, pages, price</li>
+                        <li>A method to display book information</li>
+                    </ul>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Solution</button>
+                <div class="exercise-answer">
+                    <div class="code-block">public class Book {
+    String title;
+    String author;
+    int pages;
+    double price;
+    
+    // Default constructor
+    public Book() {
+        title = "Unknown";
+        author = "Unknown";
+        pages = 0;
+        price = 0.0;
+    }
+    
+    // Constructor with title only
+    public Book(String title) {
+        this.title = title;
+        this.author = "Unknown";
+        this.pages = 0;
+        this.price = 0.0;
+    }
+    
+    // Full constructor
+    public Book(String title, String author, int pages, double price) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.price = price;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("Pages: " + pages);
+        System.out.println("Price: $" + price);
+        System.out.println("---");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book1 = new Book();
+        Book book2 = new Book("Java Programming");
+        Book book3 = new Book("Effective Java", "Joshua Bloch", 416, 49.99);
+        
+        book1.displayInfo();
+        book2.displayInfo();
+        book3.displayInfo();
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="arrays-objects">
+            <h2>4. Arrays of Objects</h2>
+            
+            <div class="concept-highlight">
+                <h3>📚 Working with Multiple Objects</h3>
+                <p>Just like we can have arrays of numbers or strings, we can have arrays of objects!</p>
+            </div>
+
+            <h3>Creating and Using Arrays of Objects</h3>
+            <div class="code-block">public class Student {
+    String name;
+    int grade;
+    
+    public Student(String name, int grade) {
+        this.name = name;
+        this.grade = grade;
+    }
+    
+    public void displayInfo() {
+        System.out.println(name + ": Grade " + grade);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Method 1: Create array then initialize each element
+        Student[] students = new Student[3];
+        
+        students[0] = new Student("Alice", 85);
+        students[1] = new Student("Bob", 92);
+        students[2] = new Student("Charlie", 78);
+        
+        System.out.println("=== Method 1 ===");
+        for (int i = 0; i < students.length; i++) {
+            students[i].displayInfo();
+        }
+        
+        // Method 2: Initialize array with objects directly
+        Student[] students2 = {
+            new Student("Diana", 95),
+            new Student("Eve", 88),
+            new Student("Frank", 91)
+        };
+        
+        System.out.println("\n=== Method 2 ===");
+        for (Student student : students2) {
+            student.displayInfo();
+        }
+    }
+}</div>
+
+            <div class="code-explanation">
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li><code>Student[] students = new Student[3]</code> creates an array that can hold 3 Student objects</li>
+                    <li>Each element must be initialized with <code>new Student()</code> before use</li>
+                    <li>Enhanced for loop (<code>for (Student student : students)</code>) is cleaner for iterating</li>
+                </ul>
+            </div>
+
+            <h3>Practical Example: Student Management System</h3>
+            <div class="code-block">public class StudentManager {
+    public static void main(String[] args) {
+        Student[] students = {
+            new Student("Alice", 85),
+            new Student("Bob", 92),
+            new Student("Charlie", 78),
+            new Student("Diana", 95),
+            new Student("Eve", 88)
+        };
+        
+        // Calculate average grade
+        double total = 0;
+        for (Student student : students) {
+            total += student.grade;
+        }
+        double average = total / students.length;
+        System.out.println("Average grade: " + average);
+        
+        // Find highest and lowest grades
+        int highest = students[0].grade;
+        int lowest = students[0].grade;
+        String topStudent = students[0].name;
+        String bottomStudent = students[0].name;
+        
+        for (Student student : students) {
+            if (student.grade > highest) {
+                highest = student.grade;
+                topStudent = student.name;
+            }
+            if (student.grade < lowest) {
+                lowest = student.grade;
+                bottomStudent = student.name;
+            }
+        }
+        
+        System.out.println("Top student: " + topStudent + " (" + highest + ")");
+        System.out.println("Lowest grade: " + bottomStudent + " (" + lowest + ")");
+        
+        // Count students with grade above 90
+        int countAbove90 = 0;
+        for (Student student : students) {
+            if (student.grade >= 90) {
+                countAbove90++;
+            }
+        }
+        System.out.println("Students with A grade: " + countAbove90);
+    }
+}</div>
+        </section>
+
+        <section id="static">
+            <h2>5. Static Keyword</h2>
+            
+            <div class="concept-highlight">
+                <h3>🏢 Class-Level vs Object-Level</h3>
+                <p>The <code>static</code> keyword is used for members that belong to the class itself, rather than to individual objects.</p>
+            </div>
+
+            <div class="visual-explanation">
+                <h4>🧩 Static vs Instance Members</h4>
+                <p><strong>Instance Variables:</strong> Each object has its own copy</p>
+                <p><strong>Static Variables:</strong> Shared by all objects of the class</p>
+            </div>
+
+            <h3>Static Variables (Class Variables)</h3>
+            <div class="code-block">public class Employee {
+    // Instance variables - each object has its own copy
+    String name;
+    int id;
+    
+    // Static variables - shared by ALL objects
+    static String company = "Tech Corp";
+    static int employeeCount = 0;
+    
+    public Employee(String name, int id) {
+        this.name = name;
+        this.id = id;
+        employeeCount++;  // This increments the SHARED counter
+    }
+    
+    public void displayInfo() {
+        System.out.println("ID: " + id + ", Name: " + name + ", Company: " + company);
+    }
+    
+    // Static method - can be called without creating an object
+    public static void displayEmployeeCount() {
+        System.out.println("Total employees: " + employeeCount);
+    }
+}</div>
+
+            <h3>Using Static Members</h3>
+            <div class="code-block">public class Main {
+    public static void main(String[] args) {
+        // Access static variable WITHOUT creating an object
+        System.out.println("Company: " + Employee.company);
+        
+        // Call static method WITHOUT creating an object
+        Employee.displayEmployeeCount();
+        
+        System.out.println("\n--- Creating Employees ---");
+        
+        // Create employees
+        Employee emp1 = new Employee("Alice", 101);
+        Employee emp2 = new Employee("Bob", 102);
+        Employee emp3 = new Employee("Charlie", 103);
+        
+        emp1.displayInfo();
+        emp2.displayInfo();
+        emp3.displayInfo();
+        
+        // Static method shows updated count
+        Employee.displayEmployeeCount();
+        
+        // Static variable can also be accessed through objects (but not recommended)
+        System.out.println("Company from object: " + emp1.company);
+    }
+}</div>
+
+            <div class="code-explanation">
+                <p><strong>Output:</strong></p>
+                <div class="code-block">Company: Tech Corp
+Total employees: 0
+
+--- Creating Employees ---
+ID: 101, Name: Alice, Company: Tech Corp
+ID: 102, Name: Bob, Company: Tech Corp
+ID: 103, Name: Charlie, Company: Tech Corp
+Total employees: 3
+Company from object: Tech Corp</div>
+            </div>
+
+            <div class="warning">
+                <p><strong>Important Rules for Static Methods:</strong></p>
+                <ul>
+                    <li>Static methods can only access static variables and call other static methods directly</li>
+                    <li>They cannot access instance variables or methods without creating an object first</li>
+                    <li>They are called using the class name: <code>ClassName.staticMethod()</code></li>
+                </ul>
+            </div>
+
+            <h3>Common Use Cases for Static</h3>
+            <div class="code-block">public class MathUtils {
+    // Constants
+    public static final double PI = 3.14159;
+    
+    // Utility methods
+    public static double calculateCircleArea(double radius) {
+        return PI * radius * radius;
+    }
+    
+    public static int findMax(int[] numbers) {
+        if (numbers.length == 0) return 0;
+        int max = numbers[0];
+        for (int num : numbers) {
+            if (num > max) max = num;
+        }
+        return max;
+    }
+    
+    // Factory method
+    public static Student createStudent(String name, int grade) {
+        return new Student(name, grade);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Using static constants and methods
+        double area = MathUtils.calculateCircleArea(5.0);
+        System.out.println("Circle area: " + area);
+        
+        int[] nums = {5, 2, 8, 1, 9};
+        int max = MathUtils.findMax(nums);
+        System.out.println("Maximum: " + max);
+        
+        // Using static factory method
+        Student student = MathUtils.createStudent("John", 85);
+        student.displayInfo();
+    }
+}</div>
+        </section>
+
+        <!-- Continuing with more detailed inheritance section -->
+        <section id="inheritance">
+            <h2>6. Inheritance</h2>
+            
+            <div class="concept-highlight">
+                <h3>👨‍👩‍👧‍👦 Building Class Hierarchies</h3>
+                <p>Inheritance allows a class to inherit properties and methods from another class, promoting code reuse.</p>
+            </div>
+
+            <h3>Basic Inheritance Example</h3>
+            <div class="code-block">// Parent class (superclass) - contains common properties and behaviors
+public class Animal {
+    String name;
+    int age;
+    
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public void eat() {
+        System.out.println(name + " is eating.");
+    }
+    
+    public void sleep() {
+        System.out.println(name + " is sleeping.");
+    }
+    
+    public void makeSound() {
+        System.out.println(name + " makes a generic animal sound.");
+    }
+}
+
+// Child class (subclass) - inherits from Animal and adds specific features
+public class Dog extends Animal {
+    String breed;
+    
+    // Constructor calls parent constructor using super()
+    public Dog(String name, int age, String breed) {
+        super(name, age);  // Must be first line in constructor
+        this.breed = breed;
+    }
+    
+    // Additional method specific to Dog
+    public void bark() {
+        System.out.println(name + " is barking! Woof woof!");
+    }
+    
+    // Method overriding - providing specific implementation
+    @Override
+    public void makeSound() {
+        System.out.println(name + " says: Woof! Woof!");
+    }
+}
+
+// Another child class
+public class Cat extends Animal {
+    boolean hasClaws;
+    
+    public Cat(String name, int age, boolean hasClaws) {
+        super(name, age);
+        this.hasClaws = hasClaws;
+    }
+    
+    public void meow() {
+        System.out.println(name + " says meow!");
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println(name + " says: Meow!");
+    }
+}</div>
+
+            <h3>7. Super Keyword - Detailed Explanation</h3>
+            <p>The <code>super</code> keyword is used to refer to the parent class. It has three main uses:</p>
+
+            <div class="code-block">public class Vehicle {
+    String brand;
+    int year;
+    
+    public Vehicle(String brand, int year) {
+        this.brand = brand;
+        this.year = year;
+    }
+    
+    public void start() {
+        System.out.println("Vehicle is starting...");
+    }
+    
+    public void displayInfo() {
+        System.out.println("Brand: " + brand + ", Year: " + year);
+    }
+}
+
+public class Car extends Vehicle {
+    int doors;
+    String fuelType;
+    
+    public Car(String brand, int year, int doors, String fuelType) {
+        // 1. Calling parent constructor - MUST be first line
+        super(brand, year);
+        
+        this.doors = doors;
+        this.fuelType = fuelType;
+    }
+    
+    @Override
+    public void start() {
+        // 2. Calling parent method
+        super.start();
+        System.out.println("Car with " + doors + " doors is ready!");
+    }
+    
+    @Override
+    public void displayInfo() {
+        // 3. Accessing parent's method and adding more info
+        super.displayInfo();
+        System.out.println("Doors: " + doors + ", Fuel: " + fuelType);
+    }
+    
+    // Additional method specific to Car
+    public void honk() {
+        System.out.println("Beep beep!");
+    }
+}</div>
+
+            <h3>8. Method Overriding - Complete Guide</h3>
+            <p>Method overriding allows a subclass to provide a specific implementation of a method that is already defined in its parent class.</p>
+
+            <div class="code-block">public class Main {
+    public static void main(String[] args) {
+        // Creating objects of different types
+        Animal genericAnimal = new Animal("Generic", 5);
+        Dog dog = new Dog("Buddy", 3, "Golden Retriever");
+        Cat cat = new Cat("Whiskers", 2, true);
+        
+        System.out.println("=== Testing Inheritance ===");
+        
+        // All animals can eat and sleep (inherited methods)
+        genericAnimal.eat();
+        dog.eat();      // Inherited from Animal
+        cat.eat();      // Inherited from Animal
+        
+        System.out.println("\n=== Testing Method Overriding ===");
+        
+        // Each animal makes a different sound (overridden methods)
+        genericAnimal.makeSound();  // Generic animal sound
+        dog.makeSound();            // Woof! Woof! (overridden)
+        cat.makeSound();            // Meow! (overridden)
+        
+        System.out.println("\n=== Testing Specific Methods ===");
+        
+        // Specific methods only available in subclasses
+        dog.bark();     // Only Dog can bark
+        cat.meow();     // Only Cat can meow
+        
+        // genericAnimal.bark();  // This would cause ERROR!
+        
+        System.out.println("\n=== Testing Car Class ===");
+        
+        Car car = new Car("Toyota", 2022, 4, "Gasoline");
+        car.displayInfo();
+        car.start();
+        car.honk();
+    }
+}</div>
+
+            <div class="code-explanation">
+                <p><strong>Rules for Method Overriding:</strong></p>
+                <ol>
+                    <li>The method must have the same name and parameters as in the parent class</li>
+                    <li>The return type should be the same or a subtype (covariant return type)</li>
+                    <li>Cannot reduce visibility (e.g., can't change from public to private)</li>
+                    <li>Use <code>@Override</code> annotation for clarity and compile-time checking</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Practice: Shape Hierarchy
+                    <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                </h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a shape hierarchy with:</p>
+                    <ul>
+                        <li>Shape class as parent with color and calculateArea() method</li>
+                        <li>Circle and Rectangle classes extending Shape</li>
+                        <li>Override calculateArea() in each subclass</li>
+                        <li>Use constructors with super()</li>
+                    </ul>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Solution</button>
+                <div class="exercise-answer">
+                    <div class="code-block">// Parent class
+public class Shape {
+    protected String color;
+    
+    public Shape(String color) {
+        this.color = color;
+    }
+    
+    // This method will be overridden by subclasses
+    public double calculateArea() {
+        return 0.0;  // Default implementation
+    }
+    
+    public void displayColor() {
+        System.out.println("Shape color: " + color);
+    }
+}
+
+// Circle subclass
+public class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, double radius) {
+        super(color);  // Call parent constructor
+        this.radius = radius;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public void displayColor() {
+        System.out.println("Circle color: " + color);
+    }
+    
+    public double getCircumference() {
+        return 2 * Math.PI * radius;
+    }
+}
+
+// Rectangle subclass
+public class Rectangle extends Shape {
+    private double length;
+    private double width;
+    
+    public Rectangle(String color, double length, double width) {
+        super(color);
+        this.length = length;
+        this.width = width;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return length * width;
+    }
+    
+    public double getPerimeter() {
+        return 2 * (length + width);
+    }
+}
+
+// Testing the hierarchy
+public class ShapeTest {
+    public static void main(String[] args) {
+        Circle circle = new Circle("Red", 5.0);
+        Rectangle rectangle = new Rectangle("Blue", 4.0, 6.0);
+        
+        System.out.println("=== Circle ===");
+        circle.displayColor();
+        System.out.println("Area: " + circle.calculateArea());
+        System.out.println("Circumference: " + circle.getCircumference());
+        
+        System.out.println("\n=== Rectangle ===");
+        rectangle.displayColor();
+        System.out.println("Area: " + rectangle.calculateArea());
+        System.out.println("Perimeter: " + rectangle.getPerimeter());
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Continuing with more detailed polymorphism section -->
+        <section id="polymorphism">
+    <h2>Interfaces and Polymorphism</h2>
+    
+    <div class="concept-highlight">
+        <h3>Interfaces: Defining Behavioral Contracts</h3>
+        <p>An interface defines a contract that classes must fulfill by implementing specified methods.</p>
+    </div>
+
+    <h3>Interface Declaration and Implementation</h3>
+    
+    <div class="code-block">// Interface for user authentication behaviors
+interface Authenticatable {
+    boolean login(String username, String password);
+    void logout();
+    boolean isLoggedIn();
+}
+
+// Student implementation
+class Student implements Authenticatable {
+    private String studentId;
+    private boolean loggedIn = false;
+    
+    public Student(String studentId) {
+        this.studentId = studentId;
+    }
+    
+    @Override
+    public boolean login(String username, String password) {
+        if (username.equals("student") && password.equals("pass123")) {
+            loggedIn = true;
+            System.out.println("Student " + studentId + " logged in");
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public void logout() {
+        loggedIn = false;
+        System.out.println("Student logged out");
+    }
+    
+    @Override
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+}
+
+// Teacher implementation
+class Teacher implements Authenticatable {
+    private String teacherId;
+    private boolean loggedIn = false;
+    
+    public Teacher(String teacherId) {
+        this.teacherId = teacherId;
+    }
+    
+    @Override
+    public boolean login(String username, String password) {
+        if (username.equals("teacher") && password.equals("teach456")) {
+            loggedIn = true;
+            System.out.println("Teacher " + teacherId + " logged in");
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public void logout() {
+        loggedIn = false;
+        System.out.println("Teacher logged out");
+    }
+    
+    @Override
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+}</div>
+
+    <div class="code-explanation">
+        <p><strong>Interface Characteristics:</strong></p>
+        <ul>
+            <li>Defines method signatures without implementations</li>
+            <li>Classes implement interfaces using the <code>implements</code> keyword</li>
+            <li>Multiple interfaces can be implemented by a single class</li>
+            <li>Promotes code abstraction and standardization</li>
+        </ul>
+    </div>
+
+    <h3>Polymorphism: Interface-Based Type System</h3>
+    
+    <div class="code-block">public class SchoolSystem {
+    public static void main(String[] args) {
+        // Polymorphic array: Authenticatable reference type, various implementations
+        Authenticatable[] users = {
+            new Student("S1001"),
+            new Teacher("T2001"),
+            new Student("S1002")
+        };
+        
+        // Polymorphic method invocation
+        System.out.println("=== User Authentication ===");
+        for (Authenticatable user : users) {
+            boolean success = user.login("student", "pass123");
+            System.out.println("Login successful: " + success);
+            System.out.println("User logged in: " + user.isLoggedIn());
+            System.out.println();
+        }
+        
+        // Demonstrating interface compatibility
+        System.out.println("=== Individual User Processing ===");
+        processUser(new Student("S1003"));
+        processUser(new Teacher("T2002"));
+    }
+    
+    // Method accepting any Authenticatable implementation
+    public static void processUser(Authenticatable user) {
+        System.out.println("Processing user...");
+        user.login("user", "password");
+        System.out.println("Currently logged in: " + user.isLoggedIn());
+    }
+}</div>
+
+    <h3>Advanced Polymorphism with Multiple Interfaces</h3>
+    
+    <div class="code-block">// Additional interface for grading capability
+interface Grader {
+    void assignGrade(String studentId, int grade);
+    double calculateAverage();
+}
+
+// Admin class implementing multiple interfaces
+class Admin implements Authenticatable, Grader {
+    private String adminId;
+    private boolean loggedIn = false;
+    
+    public Admin(String adminId) {
+        this.adminId = adminId;
+    }
+    
+    @Override
+    public boolean login(String username, String password) {
+        if (username.equals("admin") && password.equals("admin789")) {
+            loggedIn = true;
+            System.out.println("Admin " + adminId + " logged in");
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public void logout() {
+        loggedIn = false;
+        System.out.println("Admin logged out");
+    }
+    
+    @Override
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+    
+    @Override
+    public void assignGrade(String studentId, int grade) {
+        System.out.println("Admin assigned grade " + grade + " to student " + studentId);
+    }
+    
+    @Override
+    public double calculateAverage() {
+        return 85.5; // Example calculation
+    }
+}
+
+// Demonstrating interface polymorphism
+public class UserManagement {
+    public static void main(String[] args) {
+        Admin admin = new Admin("A3001");
+        
+        // Interface reference variables
+        Authenticatable authUser = admin;
+        Grader grader = admin;
+        
+        // Access through different interfaces
+        System.out.println("=== Authentication Interface ===");
+        authUser.login("admin", "admin789");
+        System.out.println("Is logged in: " + authUser.isLoggedIn());
+        
+        System.out.println("\n=== Grader Interface ===");
+        grader.assignGrade("S1005", 95);
+        System.out.println("Class average: " + grader.calculateAverage());
+        
+        // Demonstrating type checking
+        System.out.println("\n=== Type Compatibility ===");
+        if (authUser instanceof Grader) {
+            System.out.println("This user can also assign grades");
+            Grader g = (Grader) authUser;
+            g.assignGrade("S1006", 88);
+        }
+    }
+}</div>
+
+    <div class="code-explanation">
+        <p><strong>Polymorphism Principles:</strong></p>
+        <ol>
+            <li><strong>Interface Polymorphism:</strong> Objects can be accessed through interface references</li>
+            <li><strong>Runtime Binding:</strong> Method implementation determined at execution time</li>
+            <li><strong>Type Substitution:</strong> Interface references can hold any implementing object</li>
+            <li><strong>Extensibility:</strong> New implementations can be added without modifying existing code</li>
+        </ol>
+    </div>
+
+    <h3>Practical Example: Library System</h3>
+    
+    <div class="code-block">// Core interface for library users
+interface LibraryUser {
+    String getName();
+    String getId();
+    void displayUserInfo();
+}
+
+// Student user
+class LibraryStudent implements LibraryUser {
+    private String name;
+    private String id;
+    private String major;
+    
+    public LibraryStudent(String name, String id, String major) {
+        this.name = name;
+        this.id = id;
+        this.major = major;
+    }
+    
+    @Override
+    public String getName() { return name; }
+    
+    @Override
+    public String getId() { return id; }
+    
+    @Override
+    public void displayUserInfo() {
+        System.out.println("Student: " + name + " (ID: " + id + ")");
+        System.out.println("Major: " + major);
+    }
+}
+
+// Faculty user
+class LibraryFaculty implements LibraryUser {
+    private String name;
+    private String id;
+    private String department;
+    
+    public LibraryFaculty(String name, String id, String department) {
+        this.name = name;
+        this.id = id;
+        this.department = department;
+    }
+    
+    @Override
+    public String getName() { return name; }
+    
+    @Override
+    public String getId() { return id; }
+    
+    @Override
+    public void displayUserInfo() {
+        System.out.println("Faculty: " + name + " (ID: " + id + ")");
+        System.out.println("Department: " + department);
+    }
+    
+    public void borrowBooks() {
+        System.out.println(name + " is borrowing books");
+    }
+}
+
+// Polymorphic user management
+public class Library {
+    public static void main(String[] args) {
+        LibraryUser[] users = {
+            new LibraryStudent("Alice Johnson", "STU001", "Computer Science"),
+            new LibraryFaculty("Dr. Smith", "FAC001", "Engineering"),
+            new LibraryStudent("Bob Wilson", "STU002", "Mathematics")
+        };
+        
+        // Process all users polymorphically
+        System.out.println("=== Library Users ===");
+        for (LibraryUser user : users) {
+            user.displayUserInfo();
+            
+            // Type-specific behavior
+            if (user instanceof LibraryFaculty) {
+                LibraryFaculty faculty = (LibraryFaculty) user;
+                faculty.borrowBooks();
+            }
+            System.out.println();
+        }
+        
+        // Find user by ID (polymorphic search)
+        System.out.println("=== Search Results ===");
+        LibraryUser found = findUser(users, "STU001");
+        if (found != null) {
+            System.out.println("Found user: " + found.getName());
+        }
+    }
+    
+    // Generic method works with any LibraryUser
+    public static LibraryUser findUser(LibraryUser[] users, String id) {
+        for (LibraryUser user : users) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        return null;
+    }
+}</div>
+
+    <div class="note">
+        <h4>Key Benefits of Interface-Based Design</h4>
+        <ul>
+            <li><strong>Decoupling:</strong> Implementation separated from interface</li>
+            <li><strong>Testability:</strong> Easy mocking and testing through interfaces</li>
+            <li><strong>Maintainability:</strong> Changes to implementation don't affect interface consumers</li>
+            <li><strong>Flexibility:</strong> Multiple implementations can coexist</li>
+            <li><strong>Type Safety:</strong> Compile-time checking of interface compliance</li>
+        </ul>
+    </div>
+
+    <div class="exercise">
+        <h3>Exercise: Notification System Interface</h3>
+        <div class="exercise-question">
+            <p>Create a <code>Notifiable</code> interface with methods:</p>
+            <ul>
+                <li><code>void sendNotification(String message)</code></li>
+                <li><code>String getNotificationPreferences()</code></li>
+            </ul>
+            <p>Implement this interface for:</p>
+            <ol>
+                <li><code>EmailUser</code> class</li>
+                <li><code>SMSUser</code> class</li>
+            </ol>
+            <p>Demonstrate polymorphism by sending notifications through both implementations.</p>
+        </div>
+        <button class="exercise-btn" onclick="toggleAnswer(this)">Show Solution</button>
+        <div class="exercise-answer">
+            <div class="code-block">interface Notifiable {
+    void sendNotification(String message);
+    String getNotificationPreferences();
+}
+
+class EmailUser implements Notifiable {
+    private String email;
+    
+    public EmailUser(String email) {
+        this.email = email;
+    }
+    
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sending email to " + email + ": " + message);
+    }
+    
+    @Override
+    public String getNotificationPreferences() {
+        return "Email notifications enabled for " + email;
+    }
+}
+
+class SMSUser implements Notifiable {
+    private String phoneNumber;
+    
+    public SMSUser(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sending SMS to " + phoneNumber + ": " + message);
+    }
+    
+    @Override
+    public String getNotificationPreferences() {
+        return "SMS notifications enabled for " + phoneNumber;
+    }
+}
+
+public class NotificationSystem {
+    public static void main(String[] args) {
+        Notifiable[] users = {
+            new EmailUser("student@school.edu"),
+            new SMSUser("555-1234")
+        };
+        
+        String[] messages = {"Class cancelled", "Assignment due tomorrow"};
+        
+        for (int i = 0; i < users.length; i++) {
+            System.out.println(users[i].getNotificationPreferences());
+            users[i].sendNotification(messages[i]);
+            System.out.println();
+        }
+    }
+}</div>
+        </div>
+    </div>
+</section>
+
+        <!-- Continuing with encapsulation section -->
+        <section id="encapsulation">
+    <h2>10. Getters & Setters - Made Simple!</h2>
+    
+    <div class="concept-highlight">
+        <h3>🔒 Why Use Getters and Setters?</h3>
+        <p>They protect your data and give you control over how it's accessed and modified.</p>
+    </div>
+
+    <h3>Simple Student Class Example</h3>
+    
+    <div class="code-block">public class SimpleStudent {
+    // Private variables - cannot be accessed directly
+    private String name;
+    private int age;
+    private double gpa;
+    
+    // Constructor
+    public SimpleStudent(String name, int age, double gpa) {
+        this.name = name;
+        setAge(age);    // Use setter to validate
+        setGpa(gpa);    // Use setter to validate
+    }
+    
+    // 📥 GETTERS - Allow READ access
+    public String getName() {
+        return name;
+    }
+    
+    public int getAge() {
+        return age;
+    }
+    
+    public double getGpa() {
+        return gpa;
+    }
+    
+    // 📤 SETTERS - Allow WRITE access with validation
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Error: Name cannot be empty!");
+        }
+    }
+    
+    public void setAge(int age) {
+        if (age >= 0 && age <= 120) {  // Reasonable age validation
+            this.age = age;
+        } else {
+            System.out.println("Error: Age must be between 0 and 120!");
+        }
+    }
+    
+    public void setGpa(double gpa) {
+        if (gpa >= 0.0 && gpa <= 4.0) {  // GPA must be 0.0 to 4.0
+            this.gpa = gpa;
+        } else {
+            System.out.println("Error: GPA must be between 0.0 and 4.0!");
+        }
+    }
+    
+    // Helper method using getters
+    public void displayInfo() {
+        System.out.println("Student: " + getName() + 
+                         ", Age: " + getAge() + 
+                         ", GPA: " + getGpa());
+    }
+}</div>
+
+    <h3>Using Getters and Setters</h3>
+    
+    <div class="code-block">public class SimpleStudentDemo {
+    public static void main(String[] args) {
+        // Create a student
+        SimpleStudent student = new SimpleStudent("Alice", 20, 3.8);
+        
+        System.out.println("=== Initial Student ===");
+        student.displayInfo();
+        
+        System.out.println("\n=== Using Getters ===");
+        System.out.println("Name: " + student.getName());
+        System.out.println("Age: " + student.getAge());
+        System.out.println("GPA: " + student.getGpa());
+        
+        System.out.println("\n=== Using Setters ===");
+        // Try to set valid values
+        student.setName("Alice Johnson");
+        student.setAge(21);
+        student.setGpa(3.9);
+        student.displayInfo();
+        
+        System.out.println("\n=== Testing Invalid Values ===");
+        // Try invalid values - should show errors
+        student.setName("");      // Empty name
+        student.setAge(150);      // Too old
+        student.setGpa(5.0);      // GPA too high
+        
+        // Show values didn't change
+        student.displayInfo();
+        
+        System.out.println("\n=== Direct Access Test ===");
+        // Try to access directly - WON'T WORK!
+        // student.name = "Bob";  // ERROR: name has private access
+        // System.out.println(student.age);  // ERROR: age has private access
+        
+        // But we CAN access through getters
+        System.out.println("Still: " + student.getName());
+    }
+}</div>
+
+    <div class="visual-explanation">
+        <h4>🎯 Simple Getter/Setter Pattern</h4>
+        <p><strong>Getter:</strong> <code>public Type getVariableName() { return variableName; }</code></p>
+        <p><strong>Setter:</strong> <code>public void setVariableName(Type value) { this.variableName = value; }</code></p>
+    </div>
+
+    <h3>Even Simpler Example: Bank Account</h3>
+    
+    <div class="code-block">public class SimpleBankAccount {
+    private String accountHolder;
+    private double balance;
+    
+    // Constructor
+    public SimpleBankAccount(String accountHolder, double initialBalance) {
+        this.accountHolder = accountHolder;
+        this.balance = initialBalance;
+    }
+    
+    // Getters
+    public String getAccountHolder() {
+        return accountHolder;
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+    
+    // Setters
+    public void setAccountHolder(String accountHolder) {
+        if (accountHolder != null && accountHolder.length() >= 2) {
+            this.accountHolder = accountHolder;
+        }
+    }
+    
+    // Notice: NO setter for balance!
+    // We don't want people to directly change the balance
+    
+    // Instead, we provide safe methods to modify balance
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
+        }
+    }
+    
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+        } else {
+            System.out.println("Invalid withdrawal amount!");
+        }
+    }
+    
+    public void displayAccount() {
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Balance: $" + balance);
+    }
+}</div>
+
+    <h3>Quick Practice: Simple Rectangle Class</h3>
+    
+    <div class="code-block">public class Rectangle {
+    private double length;
+    private double width;
+    
+    public Rectangle(double length, double width) {
+        setLength(length);
+        setWidth(width);
+    }
+    
+    // Getter for length
+    public double getLength() {
+        return length;
+    }
+    
+    // Setter for length
+    public void setLength(double length) {
+        if (length > 0) {
+            this.length = length;
+        }
+    }
+    
+    // Getter for width
+    public double getWidth() {
+        return width;
+    }
+    
+    // Setter for width
+    public void setWidth(double width) {
+        if (width > 0) {
+            this.width = width;
+        }
+    }
+    
+    // Calculate area using getters
+    public double getArea() {
+        return getLength() * getWidth();  // Using getters
+    }
+    
+    // Calculate perimeter
+    public double getPerimeter() {
+        return 2 * (length + width);      // Using direct access (inside class)
+    }
+    
+    public void display() {
+        System.out.println("Rectangle: " + length + " x " + width);
+        System.out.println("Area: " + getArea());
+        System.out.println("Perimeter: " + getPerimeter());
+    }
+}</div>
+
+    <div class="note">
+        <p><strong>Quick Summary:</strong></p>
+        <ul>
+            <li>✅ <strong>Getter:</strong> Returns the value → <code>public Type getVariable()</code></li>
+            <li>✅ <strong>Setter:</strong> Sets the value → <code>public void setVariable(Type value)</code></li>
+            <li>✅ <strong>Why private?</strong> To prevent unauthorized access</li>
+            <li>✅ <strong>Why use?</strong> To add validation and control</li>
+            <li>✅ <strong>Tip:</strong> Don't always make setters - some data shouldn't be changed!</li>
+        </ul>
+    </div>
+</section>
+
+        <section id="exercises">
+            <h2>Comprehensive Practice Exercises</h2>
+            
+            <div class="exercise">
+                <h3>Exercise 1: Complete Student Management System
+                    <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                </h3>
+                <div class="exercise-question">
+                    <p><strong>Question:</strong> Create a complete Student Management System with all OOP concepts:</p>
+                    <ul>
+                        <li>Student class with full encapsulation</li>
+                        <li>Multiple constructors with constructor overloading</li>
+                        <li>Array of Student objects</li>
+                        <li>Static methods and variables</li>
+                        <li>Method overriding with toString()</li>
+                        <li>Input validation in setters</li>
+                        <li>Search and statistics functionality</li>
+                    </ul>
+                </div>
+                <button class="exercise-btn" onclick="toggleAnswer(this)">Show Complete Solution</button>
+                <div class="exercise-answer">
+                    <div class="code-block">import java.util.ArrayList;
+
+public class Student {
+    private int id;
+    private String name;
+    private int grade;
+    private String major;
+    private static int studentCount = 0;
+    private static final int MAX_GRADE = 100;
+    private static final int MIN_GRADE = 0;
+    
+    // Constructors
+    public Student() {
+        studentCount++;
+    }
+    
+    public Student(int id, String name) {
+        this();
+        this.id = id;
+        this.name = name;
+    }
+    
+    public Student(int id, String name, int grade, String major) {
+        this(id, name);
+        setGrade(grade);
+        this.major = major;
+    }
+    
+    // Getters
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public int getGrade() { return grade; }
+    public String getMajor() { return major; }
+    public static int getStudentCount() { return studentCount; }
+    
+    // Setters with validation
+    public void setId(int id) {
+        if (id <= 0) throw new IllegalArgumentException("ID must be positive");
+        this.id = id;
+    }
+    
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        this.name = name.trim();
+    }
+    
+    public void setGrade(int grade) {
+        if (grade < MIN_GRADE || grade > MAX_GRADE) {
+            throw new IllegalArgumentException("Grade must be between " + MIN_GRADE + " and " + MAX_GRADE);
+        }
+        this.grade = grade;
+    }
+    
+    public void setMajor(String major) {
+        this.major = major;
+    }
+    
+    // Business methods
+    public String getLetterGrade() {
+        if (grade >= 90) return "A";
+        if (grade >= 80) return "B";
+        if (grade >= 70) return "C";
+        if (grade >= 60) return "D";
+        return "F";
+    }
+    
+    public boolean isPassing() {
+        return grade >= 60;
+    }
+    
+    // Static methods
+    public static double calculateAverage(Student[] students) {
+        if (students == null || students.length == 0) return 0.0;
+        
+        double total = 0;
+        int count = 0;
+        for (Student student : students) {
+            if (student != null) {
+                total += student.getGrade();
+                count++;
+            }
+        }
+        return count == 0 ? 0.0 : total / count;
+    }
+    
+    public static Student findTopStudent(Student[] students) {
+        if (students == null || students.length == 0) return null;
+        
+        Student topStudent = students[0];
+        for (Student student : students) {
+            if (student != null && student.getGrade() > topStudent.getGrade()) {
+                topStudent = student;
+            }
+        }
+        return topStudent;
+    }
+    
+    public static Student[] getPassingStudents(Student[] students) {
+        if (students == null) return new Student[0];
+        
+        ArrayList<Student> passing = new ArrayList<>();
+        for (Student student : students) {
+            if (student != null && student.isPassing()) {
+                passing.add(student);
+            }
+        }
+        return passing.toArray(new Student[0]);
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("Student[ID=%d, Name=%-15s, Grade=%3d (%s), Major=%-10s, Passing=%s]",
+                           id, name, grade, getLetterGrade(), major, isPassing() ? "Yes" : "No");
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Student student = (Student) obj;
+        return id == student.id;
+    }
+}
+
+// Main management system
+public class StudentManagementSystem {
+    public static void main(String[] args) {
+        // Create sample students
+        Student[] students = {
+            new Student(101, "Alice Johnson", 85, "Computer Science"),
+            new Student(102, "Bob Smith", 92, "Mathematics"),
+            new Student(103, "Charlie Brown", 78, "Physics"),
+            new Student(104, "Diana Prince", 95, "Engineering"),
+            new Student(105, "Eve Wilson", 58, "Biology"),
+            new Student(106, "Frank Miller", 45, "Chemistry")
+        };
+        
+        System.out.println("=== STUDENT MANAGEMENT SYSTEM ===");
+        System.out.println("Total students: " + Student.getStudentCount());
+        
+        // Display all students
+        System.out.println("\n=== ALL STUDENTS ===");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+        
+        // Calculate statistics
+        System.out.println("\n=== STATISTICS ===");
+        double average = Student.calculateAverage(students);
+        System.out.printf("Class average: %.1f\n", average);
+        
+        Student topStudent = Student.findTopStudent(students);
+        System.out.println("Top student: " + topStudent.getName() + " with grade " + topStudent.getGrade());
+        
+        // Show passing students
+        System.out.println("\n=== PASSING STUDENTS ===");
+        Student[] passingStudents = Student.getPassingStudents(students);
+        for (Student student : passingStudents) {
+            System.out.println(student.getName() + " - " + student.getGrade());
+        }
+        
+        // Grade distribution
+        System.out.println("\n=== GRADE DISTRIBUTION ===");
+        int aCount = 0, bCount = 0, cCount = 0, dCount = 0, fCount = 0;
+        for (Student student : students) {
+            switch (student.getLetterGrade()) {
+                case "A": aCount++; break;
+                case "B": bCount++; break;
+                case "C": cCount++; break;
+                case "D": dCount++; break;
+                case "F": fCount++; break;
+            }
+        }
+        System.out.println("A: " + aCount + " students");
+        System.out.println("B: " + bCount + " students");
+        System.out.println("C: " + cCount + " students");
+        System.out.println("D: " + dCount + " students");
+        System.out.println("F: " + fCount + " students");
+        
+        // Search functionality
+        System.out.println("\n=== SEARCH RESULTS ===");
+        String searchName = "Alice";
+        System.out.println("Searching for: " + searchName);
+        for (Student student : students) {
+            if (student.getName().toLowerCase().contains(searchName.toLowerCase())) {
+                System.out.println("Found: " + student);
+            }
+        }
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>🎉 Day 4 Summary & Achievement</h2>
+            <div class="concept-highlight">
+                <h3>Congratulations! You've Mastered OOP Fundamentals! 🏆</h3>
+                <p>Today you've built a solid foundation in Object-Oriented Programming:</p>
+            </div>
+            
+            <div class="note">
+                <p><strong>Key Concepts Mastered:</strong></p>
+                <ul>
+                    <li>✅ <strong>Classes & Objects:</strong> Blueprints and instances</li>
+                    <li>✅ <strong>Constructors:</strong> Object initialization with overloading</li>
+                    <li>✅ <strong>Arrays of Objects:</strong> Working with multiple objects efficiently</li>
+                    <li>✅ <strong>Static Members:</strong> Class-level variables and methods</li>
+                    <li>✅ <strong>Inheritance:</strong> Building class hierarchies with code reuse</li>
+                    <li>✅ <strong>Method Overriding:</strong> Customizing behavior in subclasses</li>
+                    <li>✅ <strong>Polymorphism:</strong> Same interface, different implementations</li>
+                    <li>✅ <strong>Abstraction:</strong> Hiding complexity, showing essentials</li>
+                    <li>✅ <strong>Interfaces:</strong> Defining contracts for classes</li>
+                    <li>✅ <strong>Encapsulation:</strong> Data protection with getters/setters</li>
+                </ul>
+                
+                <p><strong>Real-World Applications:</strong></p>
+                <ul>
+                    <li>🎯 Student Management Systems</li>
+                    <li>🎯 Banking Applications</li>
+                    <li>🎯 Shape Calculators</li>
+                    <li>🎯 Employee Management</li>
+                    <li>🎯 And much more!</li>
+                </ul>
+                
+                <p><strong>Next Session Preview:</strong> In Day 5, we'll dive into advanced Java concepts including Collections Framework, Exception Handling, File I/O, and building a complete Library Management System!</p>
+                
+                <p style="text-align: center; margin-top: 1rem; font-weight: bold;">
+                    🚀 You're now ready to build professional Java applications! 🚀
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Java Bootcamp - Day 4: Object-Oriented Programming Fundamentals</p>
+            <p>You've completed one of the most important topics in Java programming! Keep practicing! 💪</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('show');
+            button.textContent = answer.classList.contains('show') ? 'Hide Solution' : 'Show Solution';
+        }
+    </script>
+</body>
+</html>
